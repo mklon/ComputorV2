@@ -10,15 +10,16 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = computorv2
+NAME = name
 
-SOURCE =    main.cpp \
+SOURCE =    src/main.cpp \
+            src/Computor.class.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 
 CC = g++
 
-FL = -Wall -Wextra -Werror -std=c++11
+FL =  -std=c++11
 
 all: $(NAME) done
 
