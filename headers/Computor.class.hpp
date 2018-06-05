@@ -19,9 +19,6 @@
 #include <vector>
 #include <map>
 
-using	std::cout;
-using	std::endl;
-
 class	Helper;
 
 class	Computor {

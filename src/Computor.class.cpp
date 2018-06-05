@@ -26,9 +26,10 @@ Computor	&Computor::operator=( const Computor &rhs ) {
 }
 
 void	Computor::var_handle( std::string lhs, std::string rhs ) {
-	int		i = 0;
-	_var.insert( std::pair<std::string, double>(lhs, _help.summary(rhs, i)));
-	cout << _var.at(lhs) << endl;
+	if ( isdigit( lhs[0] ))
+		throw ( CompExp( "invalid variable name" ));
+	_var.insert( std::pair<std::string, double>(lhs, _help.solve_line( lhs, rhs )));
+	cout << _var.at( lhs ) << endl;
 }
 
 void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
@@ -44,7 +45,7 @@ void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
 		iss >> lhs;
 		i++;
 		if ( i > 2 )
-			throw ( CompExp( "invalid lhs" ));
+			throw ( CompExp( "invalid variable name" ));
 	}
 	if ( lhs[lhs.size() - 1] == ')' )
 		cout << "func_handle" << endl;
@@ -55,9 +56,10 @@ void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
 void	Computor::parse_line() {
 	unsigned long int	i;
 	std::string			part;
-
+	if ( _line == "" )
+		return;
 	if (( i = _line.find( '=' )) == std::string::npos )
-		throw ( CompExp( "error" ) );
+		throw ( CompExp( "missing equality symbol" ) );
 	lhs_handle( _line.substr( 0, i ), _line.substr( i + 1 ));
 
 }

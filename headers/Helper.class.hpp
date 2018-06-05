@@ -18,8 +18,25 @@
 #include <cmath>
 #include <map>
 
+using	std::cout;
+using	std::endl;
+
 class	Helper {
 private:
+	class HelpExp : public std::exception {
+	private:
+		std::string     _exptn_msg;
+	public:
+		HelpExp();
+		HelpExp( const std::string & text );
+		HelpExp( HelpExp const & rhs );
+
+		HelpExp &	operator=( HelpExp const & rhs );
+
+		virtual const   char *what() const throw();
+
+		virtual ~HelpExp() throw();
+	};
 public:
 	std::map<std::string, double>	*_var;
 	Helper();
@@ -28,6 +45,7 @@ public:
 	Helper	&operator=( const Helper &rhs );
 
 	bool	cont_opr( std::string rhs );
+	double	solve_line( std::string lhs, std::string rhs );
 	double	summary( std::string rhs, int &i );
 	double	factor( std::string rhs, int &i );
 	double	brackets( std::string rhs, int &i );
@@ -37,7 +55,3 @@ public:
 };
 
 #endif
-/*
- * 2 + 4 *2 - 5 %4 + 2 * (4 + 5)
- * 2 + 4 *2 - 5 %4 + 2 * (4 + 5)
- */
