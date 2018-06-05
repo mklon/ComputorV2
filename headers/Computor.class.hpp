@@ -13,14 +13,18 @@
 #ifndef COMPUTOR_CLASS_HPP
 #define	COMPUTOR_CLASS_HPP
 
+#include "Helper.class.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <map>
 
 using	std::cout;
 using	std::endl;
 
-class Computor {
+class	Helper;
+
+class	Computor {
 private:
 	class CompExp : public std::exception {
 	private:
@@ -36,7 +40,9 @@ private:
 
 		virtual ~CompExp() throw();
 	};
-	std::string	_line;
+	std::string						_line;
+	Helper							_help;
+	std::map<std::string, double>	_var;
 public:
 	Computor();
 	Computor( const Computor &rhs );
@@ -45,6 +51,8 @@ public:
 
 	void	run();
 	void	parse_line();
+	void	lhs_handle( std::string lhs, std::string rhs );
+	void	var_handle( std::string lhs ,std::string rhs );
 
 	~Computor();
 };

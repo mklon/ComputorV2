@@ -23,16 +23,51 @@ Computor	&Computor::operator=( const Computor &rhs ) {
 	return ( *this );
 }
 
-void	Computor::parse_line() {
-	std::istringstream	iss( _line.substr( 0, _line.find('=')) );
-	std::string l;
+void	Computor::var_handle( std::string lhs, std::string rhs ) {
 
-	iss.str( _line.substr( _line.find('=') + 1 ));
+}
+
+void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
+	int 				i = 0;
+	std::istringstream	iss( lhs );
+
+	if ( _help.cont_opr( lhs ) ) {
+		cout << "oper_handle" << endl;
+		return;
+	}
+
+	while ( iss ) {
+		iss >> lhs;
+		i++;
+		if ( i > 2 )
+			throw ( CompExp( "invalid lhs" ));
+	}
+	if ( lhs[lhs.size() - 1] == ')' )
+		cout << "func_handle" << endl;
+	else
+		var_handle( lhs, rhs );
+}
+
+void	Computor::parse_line() {
+	unsigned long int	i;
+	std::string			part;
+
+	if (( i = _line.find( '=' )) == std::string::npos )
+		throw ( CompExp( "error" ) );
+	lhs_handle( _line.substr( 0, i ), _line.substr( i + 1 ));
+
 }
 
 void	Computor::run() {
 	while ( std::getline( std::cin, _line ) ) {
-		parse_line();
+		try {
+			//parse_line();
+			int i = 0;
+			cout << _help.summary( _line, i ) << endl;
+		}
+		catch ( std::exception &e ) {
+			cout << e.what() << endl;
+		}
 	}
 }
 

@@ -14,12 +14,13 @@ NAME = name
 
 SOURCE =    src/main.cpp \
             src/Computor.class.cpp \
+            src/Helper.class.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 
 CC = g++
 
-FL =  -std=c++11
+FL = -std=c++11
 
 all: $(NAME) done
 
