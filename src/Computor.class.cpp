@@ -12,7 +12,9 @@
 
 #include "../headers/Computor.class.hpp"
 
-Computor::Computor() {}
+Computor::Computor() {
+	_help._var = &_var;
+}
 
 Computor::Computor( const Computor &rhs ) {
 	*this = rhs;
@@ -24,7 +26,9 @@ Computor	&Computor::operator=( const Computor &rhs ) {
 }
 
 void	Computor::var_handle( std::string lhs, std::string rhs ) {
-
+	int		i = 0;
+	_var.insert( std::pair<std::string, double>(lhs, _help.summary(rhs, i)));
+	cout << _var.at(lhs) << endl;
 }
 
 void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
@@ -61,14 +65,13 @@ void	Computor::parse_line() {
 void	Computor::run() {
 	while ( std::getline( std::cin, _line ) ) {
 		try {
-			//parse_line();
-			int i = 0;
-			cout << _help.summary( _line, i ) << endl;
+			parse_line();
 		}
 		catch ( std::exception &e ) {
 			cout << e.what() << endl;
 		}
 	}
+
 }
 
 Computor::~Computor() {}

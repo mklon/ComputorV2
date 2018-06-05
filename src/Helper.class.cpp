@@ -23,6 +23,19 @@ Helper	&Helper::operator=( const Helper &rhs ) {
 	return ( *this );
 }
 
+double	Helper::find_var( std::string rhs ) {
+	std::istringstream	iss( rhs );
+
+	iss >> rhs;
+	if ( _var->find( rhs ) == _var->end() ) {
+
+		return ( std::stod( rhs ));
+	}
+	else {
+		return ( _var->at(rhs) );
+	}
+}
+
 double	Helper::brackets( std::string rhs, int &i ) {
 	double	n;
 	int		j, temp= 0;
@@ -37,9 +50,11 @@ double	Helper::brackets( std::string rhs, int &i ) {
 			i++;
 		return ( n );
 	}
-	while ( isdigit( rhs[j + temp]) || rhs[j + temp] == '.' ) temp++;
+	while ( isdigit( rhs[j + temp] ) ||
+			isalpha( rhs[j + temp] ) ||
+			rhs[j + temp] == '.' ) temp++;
 	i += temp;
-	return ( std::stod( rhs.substr( i - temp, i )));
+	return ( find_var( rhs.substr( i - temp, i ) ));
 }
 
 double	Helper::factor( std::string rhs, int &i ) {
@@ -96,23 +111,3 @@ bool	Helper::cont_opr( std::string rhs ) {
 }
 
 Helper::~Helper() {}
-
-
-/*
-	nbr = parse_factors(expr);
-	while (**expr)
-	{
-		while (**expr == ' ')
-			(*expr)++;
-		op = **expr;
-		if (op != '+' && op != '-')
-			return (nbr);
-		(*expr)++;
-		nbr2 = parse_factors(expr);
-		if (op == '+')
-			nbr += nbr2;
-		else
-			nbr -= nbr2;
-	}
-	return (nbr);
- */

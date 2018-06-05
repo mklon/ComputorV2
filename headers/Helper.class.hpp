@@ -14,11 +14,14 @@
 #define HELPER_CLASS_HPP
 
 #include <iostream>
+#include <sstream>
 #include <cmath>
+#include <map>
 
 class	Helper {
 private:
 public:
+	std::map<std::string, double>	*_var;
 	Helper();
 	Helper( const Helper &rhs );
 
@@ -28,7 +31,7 @@ public:
 	double	summary( std::string rhs, int &i );
 	double	factor( std::string rhs, int &i );
 	double	brackets( std::string rhs, int &i );
-
+	double	find_var( std::string rhs );
 
 	~Helper();
 };
