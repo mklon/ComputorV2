@@ -32,7 +32,7 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 
 
 	if ( rhs.find('[') != std::string::npos ) {
-		_mat.
+		_mtrx.read_matrix( lhs, rhs );
 	}
 	else if ( rhs.find('i') != std::string::npos )
 		cout << "complex" << endl;

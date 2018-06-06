@@ -26,12 +26,42 @@ Matrix& Matrix::operator=( const Matrix &rhs ) {
 
 Matrix::~Matrix() {}
 
-void Matrix::set_mat( std::map<std::string, std::vector<std::vector<double>>> *_mat ) {
+void	Matrix::set_mat( std::map<std::string, std::vector<std::vector<double>>> *_mat ) {
 	Matrix::_mat = _mat;
 }
 
-void Matrix::read_matrix( std::string rhs ) {
+void	Matrix::rows( std::string rhs, int &i ) {
+ 	int		j, end;
 
+	while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
+
+	j = ++i;
+	while ( true ) {
+		while ( rhs[j] != ',' && rhs[j] != ']')
+			j++;
+		cout << rhs.substr( i, j - i ) << " ";
+		i = ++j;
+		if (rhs[i - 1] == ']')
+			break;
+	}
+	cout << endl;
+
+}
+
+void	Matrix::lines( std::string rhs, int &i ) {
+	while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
+
+	while ( i < rhs.size() ) {
+		if ( rhs[i] == '[' )
+			rows( rhs, ++i );
+		i++;
+	}
+}
+
+void	Matrix::read_matrix( std::string lhs, std::string rhs ) {
+	int 	i = 0;
+
+	lines( rhs, i );
 }
 
 // MtrxExp

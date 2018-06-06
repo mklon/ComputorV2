@@ -44,7 +44,9 @@ public:
 
 	Matrix	&operator=( const Matrix &rhs );
 
-	void	read_matrix( std::string rhs );
+	void	read_matrix( std::string lhs, std::string rhs );
+	void	lines( std::string rhs, int &i );
+	void	rows( std::string rhs, int &i );
 
 	void	set_mat( std::map<std::string, std::vector<std::vector<double>>> *_mat );
 
