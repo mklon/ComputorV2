@@ -13,7 +13,8 @@
 #include "../headers/Computor.class.hpp"
 
 Computor::Computor() {
-	_help._var = &_var;
+	_help.set_var( &_var );
+	_mtrx.set_mat( &_mat );
 }
 
 Computor::Computor( const Computor &rhs ) {
@@ -30,8 +31,9 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 		throw ( CompExp( "invalid variable name" ));
 
 
-	if ( rhs.find('[') != std::string::npos )
-		cout << "matrix" << endl;
+	if ( rhs.find('[') != std::string::npos ) {
+		_mat.
+	}
 	else if ( rhs.find('i') != std::string::npos )
 		cout << "complex" << endl;
 	else {

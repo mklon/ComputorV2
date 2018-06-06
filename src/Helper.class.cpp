@@ -29,7 +29,7 @@ double	Helper::find_var( std::string rhs ) {
 		for ( int i = 0; i < rhs.size(); i++ )
 			if ( !isdigit( rhs[i] ) && rhs[i] != '.'&&
 					rhs[i] != '^' )
-				throw ( HelpExp( "unknown variable" ));
+				throw ( HelpExp( "unknown variable: " + rhs ));
 		if ( rhs == "" )
 			throw ( HelpExp( "invalid rhs" ));
 		return ( std::stod( rhs ));
@@ -140,7 +140,11 @@ bool	Helper::cont_opr( std::string rhs ) {
 
 Helper::~Helper() {}
 
-// CompExp
+void Helper::set_var( std::map<std::string, double> *_var ) {
+	Helper::_var = _var;
+}
+
+// HelpExp
 
 Helper::HelpExp::HelpExp() {}
 

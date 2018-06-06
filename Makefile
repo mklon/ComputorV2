@@ -15,6 +15,7 @@ NAME = name
 SOURCE =    src/main.cpp \
             src/Computor.class.cpp \
             src/Helper.class.cpp \
+            src/Matrix.class.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 
@@ -42,3 +43,4 @@ re: fclean all
 
 done:
 	@echo "\033[;32m[ Well done ]\033[33;0m"
+

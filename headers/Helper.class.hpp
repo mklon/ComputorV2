@@ -33,12 +33,12 @@ private:
 
 		HelpExp &	operator=( HelpExp const & rhs );
 
-		virtual const   char *what() const throw();
+		const char	*what() const throw();
 
-		virtual ~HelpExp() throw();
+		~HelpExp();
 	};
-public:
 	std::map<std::string, double>	*_var;
+public:
 	Helper();
 	Helper( const Helper &rhs );
 
@@ -50,6 +50,8 @@ public:
 	double	factor( std::string rhs, int &i );
 	double	brackets( std::string rhs, int &i );
 	double	find_var( std::string rhs );
+
+	void	set_var( std::map<std::string, double> *_var );
 
 	~Helper();
 };

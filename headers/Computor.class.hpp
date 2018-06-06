@@ -14,12 +14,14 @@
 #define	COMPUTOR_CLASS_HPP
 
 #include "Helper.class.hpp"
+#include "Matrix.class.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include <map>
 
 class	Helper;
+class	Matrix;
 
 class	Computor {
 private:
@@ -39,7 +41,10 @@ private:
 	};
 	std::string						_line;
 	Helper							_help;
+	Matrix							_mtrx;
 	std::map<std::string, double>	_var;
+	std::map<std::string, std::vector<std::vector<double >>>	_mat;
+
 public:
 	Computor();
 	Computor( const Computor &rhs );
