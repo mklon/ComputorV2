@@ -26,10 +26,21 @@ Computor	&Computor::operator=( const Computor &rhs ) {
 }
 
 void	Computor::var_handle( std::string lhs, std::string rhs ) {
-	if ( isdigit( lhs[0] ))
+	if ( isdigit( lhs[0] ) || lhs == "i" )
 		throw ( CompExp( "invalid variable name" ));
-	_var.insert( std::pair<std::string, double>(lhs, _help.solve_line( lhs, rhs )));
-	cout << _var.at( lhs ) << endl;
+
+
+	if ( rhs.find('[') != std::string::npos )
+		cout << "matrix" << endl;
+	else if ( rhs.find('i') != std::string::npos )
+		cout << "complex" << endl;
+	else {
+		if ( _var.find( lhs ) != _var.end() )
+			_var.at( lhs ) = _help.solve_line( lhs, rhs );
+		else
+			_var.insert( std::pair<std::string, double>(lhs, _help.solve_line( lhs, rhs )));
+		cout << _var.at( lhs ) << endl;
+	}
 }
 
 void	Computor::lhs_handle( std::string lhs, std::string rhs ) {

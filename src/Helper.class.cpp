@@ -27,8 +27,11 @@ double	Helper::find_var( std::string rhs ) {
 
 	if ( _var->find( rhs ) == _var->end() ) {
 		for ( int i = 0; i < rhs.size(); i++ )
-			if ( !isdigit( rhs[i] ) && rhs[i] != '.' && rhs[i] != '^' )
-				throw ( HelpExp( "invalid rhs" ));
+			if ( !isdigit( rhs[i] ) && rhs[i] != '.'&&
+					rhs[i] != '^' )
+				throw ( HelpExp( "unknown variable" ));
+		if ( rhs == "" )
+			throw ( HelpExp( "invalid rhs" ));
 		return ( std::stod( rhs ));
 	}
 	else {
@@ -72,8 +75,11 @@ double	Helper::factor( std::string rhs, int &i ) {
 		n2 = brackets( rhs, i );
 		if ( rhs[place] == '*')
 			n1 *= n2;
-		else if ( rhs[place] == '/' )
+		else if ( rhs[place] == '/' ) {
+			if ( n2 == 0 )
+				throw ( HelpExp( "division by zero" ));
 			n1 /= n2;
+		}
 		else if ( rhs[place] == '%')
 			n1 = fmod( n1, n2 );
 		else
@@ -110,6 +116,8 @@ double	Helper::solve_line( std::string lhs, std::string rhs ) {
 
 	iss >> temp;
 	if ( temp == "?" ) {
+		if ( _var->find( lhs ) == _var->end() )
+			throw ( HelpExp( "unknown variable" ));
 		return ( _var->at( lhs ) );
 	}
 	res = summary( rhs, i );
@@ -123,7 +131,7 @@ bool	Helper::cont_opr( std::string rhs ) {
 	// + - * / %
 	if ( rhs.find( '+' ) != std::string::npos ||
 			rhs.find( '-' ) != std::string::npos ||
-			rhs.find( '+' ) != std::string::npos ||
+			rhs.find( '*' ) != std::string::npos ||
 			rhs.find( '/' ) != std::string::npos ||
 			rhs.find( '%' ) != std::string::npos )
 		return ( true );
@@ -131,7 +139,6 @@ bool	Helper::cont_opr( std::string rhs ) {
 }
 
 Helper::~Helper() {}
-
 
 // CompExp
 
