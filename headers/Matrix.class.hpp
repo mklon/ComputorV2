@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include <cmath>
 #include <map>
 
@@ -37,6 +38,7 @@ private:
 
 		~MtrxExp();
 	};
+	std::map<std::string, double>	*_var;
 	std::map<std::string, std::vector<std::vector<double >>>	*_mat;
 public:
 	Matrix();
@@ -45,9 +47,13 @@ public:
 	Matrix	&operator=( const Matrix &rhs );
 
 	void	read_matrix( std::string lhs, std::string rhs );
-	void	lines( std::string rhs, int &i );
-	void	rows( std::string rhs, int &i );
+	void	size_check( std::vector<std::vector<double>> matrix );
+	void	display_mat( std::vector<std::vector<double>> matrix );
+	double	find_var( std::string rhs );
+	std::vector<std::vector<double>>	lines( std::string rhs, int &i );
+	std::vector<double>					rows( std::string rhs, int &i );
 
+	void	set_var( std::map<std::string, double> *_var );
 	void	set_mat( std::map<std::string, std::vector<std::vector<double>>> *_mat );
 
 	~Matrix();

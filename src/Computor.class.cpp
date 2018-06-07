@@ -14,6 +14,7 @@
 
 Computor::Computor() {
 	_help.set_var( &_var );
+	_mtrx.set_var( &_var );
 	_mtrx.set_mat( &_mat );
 }
 
