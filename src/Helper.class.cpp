@@ -108,7 +108,7 @@ double	Helper::summary( std::string rhs, int &i ) {
 	return ( n1 );
 }
 
-double	Helper::solve_line( std::string lhs, std::string rhs ) {
+void	Helper::solve_line( std::string lhs, std::string rhs ) {
 	int					i = 0;
 	double				res;
 	std::string			temp;
@@ -118,13 +118,19 @@ double	Helper::solve_line( std::string lhs, std::string rhs ) {
 	if ( temp == "?" ) {
 		if ( _var->find( lhs ) == _var->end() )
 			throw ( HelpExp( "unknown variable" ));
-		return ( _var->at( lhs ) );
+		cout << _var->at( lhs ) << endl;
+		return;
 	}
 	res = summary( rhs, i );
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
 			throw ( HelpExp( "invalid rhs" ));
-	return ( res );
+
+	if ( _var->find( lhs ) != _var->end() )
+		_var->at( lhs ) = res;
+	else
+		_var->insert( std::pair<std::string, double>( lhs , res ));
+	cout << _var->at( lhs ) << endl;
 }
 
 bool	Helper::cont_opr( std::string rhs ) {
@@ -140,8 +146,12 @@ bool	Helper::cont_opr( std::string rhs ) {
 
 Helper::~Helper() {}
 
-void Helper::set_var( std::map<std::string, double> *_var ) {
+void	Helper::set_var( std::map<std::string, double> *_var ) {
 	Helper::_var = _var;
+}
+
+void	Helper::set_mat( std::map<std::string, std::vector<std::vector<double>>> *_mat ) {
+	Helper::_mat = _mat;
 }
 
 // HelpExp

@@ -38,6 +38,7 @@ private:
 		~HelpExp();
 	};
 	std::map<std::string, double>	*_var;
+	std::map<std::string, std::vector<std::vector<double >>>	*_mat;
 public:
 	Helper();
 	Helper( const Helper &rhs );
@@ -45,13 +46,15 @@ public:
 	Helper	&operator=( const Helper &rhs );
 
 	bool	cont_opr( std::string rhs );
-	double	solve_line( std::string lhs, std::string rhs );
+	void	solve_line( std::string lhs, std::string rhs );
 	double	summary( std::string rhs, int &i );
 	double	factor( std::string rhs, int &i );
 	double	brackets( std::string rhs, int &i );
 	double	find_var( std::string rhs );
 
 	void	set_var( std::map<std::string, double> *_var );
+
+	void set_mat( std::map<std::string, std::vector<std::vector<double>>> *_mat );
 
 	~Helper();
 };

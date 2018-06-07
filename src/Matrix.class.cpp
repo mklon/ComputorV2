@@ -37,7 +37,7 @@ double	Matrix::find_var( std::string rhs ) {
 				 rhs[i] != '^' )
 				throw ( MtrxExp( "unknown variable: " + rhs ));
 		if ( rhs == "" )
-			throw ( MtrxExp( "invalid rhs" ));
+			throw ( MtrxExp( "invalid matrix definition" ));
 		return ( std::stod( rhs ));
 	}
 	else {
@@ -112,7 +112,6 @@ std::vector<std::vector<double>>	Matrix::lines( std::string rhs, int &i ) {
 		i++;
 	}
 	size_check( line );
-	display_mat( line );
 	return ( line );
 }
 
@@ -120,8 +119,22 @@ std::vector<std::vector<double>>	Matrix::lines( std::string rhs, int &i ) {
 
 void	Matrix::read_matrix( std::string lhs, std::string rhs ) {
 	int 	i = 0;
+	std::vector<std::vector<double>>	res;
 
-	lines( rhs, i );
+	if ( _var->find( lhs ) != _var->end() )
+		throw ( MtrxExp( "can't put the matrix in a numerical variable" ));
+
+
+	res = lines( rhs, i );
+	while ( ++i < rhs.size() )
+		if ( rhs[i] != ' ' && rhs[i] != '\t' )
+			throw ( MtrxExp( "invalid matrix definition" ));
+
+	if ( _mat->find( lhs ) != _mat->end() )
+		_mat->at( lhs ) = res;
+	else
+		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, res ));
+	display_mat( res );
 }
 
 void Matrix::set_var( std::map<std::string, double> *_var ) {

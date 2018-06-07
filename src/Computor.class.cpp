@@ -14,6 +14,7 @@
 
 Computor::Computor() {
 	_help.set_var( &_var );
+	_help.set_mat( &_mat );
 	_mtrx.set_var( &_var );
 	_mtrx.set_mat( &_mat );
 }
@@ -37,13 +38,8 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 	}
 	else if ( rhs.find('i') != std::string::npos )
 		cout << "complex" << endl;
-	else {
-		if ( _var.find( lhs ) != _var.end() )
-			_var.at( lhs ) = _help.solve_line( lhs, rhs );
-		else
-			_var.insert( std::pair<std::string, double>(lhs, _help.solve_line( lhs, rhs )));
-		cout << _var.at( lhs ) << endl;
-	}
+	else
+		_help.solve_line( lhs, rhs );
 }
 
 void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
