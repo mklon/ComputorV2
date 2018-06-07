@@ -49,9 +49,10 @@ public:
 
 	bool	cont_opr( std::string rhs );
 	void	solve_line( std::string lhs, std::string rhs );
-	double	summary( std::string rhs, int &i );
-	double	factor( std::string rhs, int &i );
-	double	brackets( std::string rhs, int &i );
+	std::string	operation( std::string lhs, std::string rhs, char op );
+	std::string	summary( std::string rhs, int &i );
+	std::string	factor( std::string rhs, int &i );
+	std::string	brackets( std::string rhs, int &i );
 	double	find_var( std::string rhs );
 
 	void	set_var( std::map<std::string, double> *_var );

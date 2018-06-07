@@ -39,8 +39,14 @@ double	Helper::find_var( std::string rhs ) {
 	}
 }
 
-double	Helper::brackets( std::string rhs, int &i ) {
-	double	n;
+std::string	Helper::operation( std::string lhs, std::string rhs, char op ) {
+
+
+	return ( " ");
+}
+
+std::string	Helper::brackets( std::string rhs, int &i ) {
+	std::string	n;
 	int		j, temp= 0;
 
 	while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
@@ -58,12 +64,12 @@ double	Helper::brackets( std::string rhs, int &i ) {
 			rhs[j + temp] == '.' ) temp++;
 	i += temp;
 	std::string	temp1 = rhs.substr( i - temp, i - j );
-	return ( find_var( temp1 ));
+	return ( temp1 );
 }
 
-double	Helper::factor( std::string rhs, int &i ) {
-	int 	place;
-	double	n1, n2;
+std::string	Helper::factor( std::string rhs, int &i ) {
+	int 		place;
+	std::string	n1, n2;
 
 	n1 = brackets( rhs, i );
 	while ( i < rhs.size() ) {
@@ -73,24 +79,15 @@ double	Helper::factor( std::string rhs, int &i ) {
 			return ( n1 );
 		i++;
 		n2 = brackets( rhs, i );
-		if ( rhs[place] == '*')
-			n1 *= n2;
-		else if ( rhs[place] == '/' ) {
-			if ( n2 == 0 )
-				throw ( HelpExp( "division by zero" ));
-			n1 /= n2;
-		}
-		else if ( rhs[place] == '%')
-			n1 = fmod( n1, n2 );
-		else
-			n1 = pow( n1, n2 );
+		n1 = operation( n1, n2, rhs[place] );
+
 	}
 	return ( n1 );
 }
 
-double	Helper::summary( std::string rhs, int &i ) {
-	int 	place;
-	double	n1,n2;
+std::string	Helper::summary( std::string rhs, int &i ) {
+	int 		place;
+	std::string	n1,n2;
 
 	n1 = factor( rhs, i);
 	while ( i < rhs.size() ) {
@@ -100,10 +97,7 @@ double	Helper::summary( std::string rhs, int &i ) {
 			return ( n1 );
 		i++;
 		n2 = factor( rhs, i );
-		if ( rhs[place] == '+')
-			n1 += n2;
-		else
-			n1 -= n2;
+		n1 = operation( n1, n2, rhs[place] );
 	}
 	return ( n1 );
 }
@@ -128,7 +122,7 @@ void	Helper::solve_line( std::string lhs, std::string rhs ) {
 	if ( _mat->find( lhs ) != _mat->end() )
 		throw ( HelpExp( "can't put number in a matrix variable" ));
 
-	res = summary( rhs, i );
+	res = std::stod( summary( rhs, i ));
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
 			throw ( HelpExp( "invalid rhs" ));
