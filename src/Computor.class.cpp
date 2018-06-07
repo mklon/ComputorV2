@@ -17,6 +17,7 @@ Computor::Computor() {
 	_help.set_mat( &_mat );
 	_mtrx.set_var( &_var );
 	_mtrx.set_mat( &_mat );
+	_help.m = &_mtrx;
 }
 
 Computor::Computor( const Computor &rhs ) {

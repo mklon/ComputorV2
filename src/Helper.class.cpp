@@ -116,11 +116,18 @@ void	Helper::solve_line( std::string lhs, std::string rhs ) {
 
 	iss >> temp;
 	if ( temp == "?" ) {
-		if ( _var->find( lhs ) == _var->end() )
+		if ( _var->find( lhs ) != _var->end() )
+			cout << _var->at( lhs ) << endl;
+		else if ( _mat->find( lhs ) != _mat->end() )
+			m->display_mat( _mat->at( lhs ));
+		else
 			throw ( HelpExp( "unknown variable" ));
-		cout << _var->at( lhs ) << endl;
 		return;
 	}
+
+	if ( _mat->find( lhs ) != _mat->end() )
+		throw ( HelpExp( "can't put number in a matrix variable" ));
+
 	res = summary( rhs, i );
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )

@@ -13,6 +13,7 @@
 #ifndef HELPER_CLASS_HPP
 #define HELPER_CLASS_HPP
 
+#include "Matrix.class.hpp"
 #include <iostream>
 #include <sstream>
 #include <cmath>
@@ -42,8 +43,9 @@ private:
 public:
 	Helper();
 	Helper( const Helper &rhs );
-
 	Helper	&operator=( const Helper &rhs );
+
+	Matrix	*m;
 
 	bool	cont_opr( std::string rhs );
 	void	solve_line( std::string lhs, std::string rhs );
