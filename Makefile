@@ -14,9 +14,8 @@ NAME = name
 
 SOURCE =    src/main.cpp \
             src/Computor.class.cpp \
-            src/Helper.class.cpp \
-            src/Matrix.class.cpp \
-            src/Solver.class.cpp \
+            src/Solver_1.class.cpp \
+            src/Solver_2.class.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 

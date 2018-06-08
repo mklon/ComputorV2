@@ -14,10 +14,6 @@
 #define	COMPUTOR_CLASS_HPP
 
 #include "Solver.class.hpp"
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
 
 class	Solver;
 

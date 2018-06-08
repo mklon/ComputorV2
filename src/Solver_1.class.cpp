@@ -1,12 +1,12 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   Helper.class.cpp                                   :+:      :+:    :+:   //
+//   Solver_1.class.cpp                                 :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: oposhiva <marvin@42.fr>                    +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2018/06/05 12:06:50 by oposhiva          #+#    #+#             //
-//   Updated: 2018/06/05 12:06:51 by oposhiva         ###   ########.fr       //
+//   Created: 2018/06/08 11:53:06 by oposhiva          #+#    #+#             //
+//   Updated: 2018/06/08 11:53:07 by oposhiva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -37,12 +37,6 @@ double	Solver::find_var( std::string rhs ) {
 	else {
 		return ( _var->at(rhs) );
 	}
-}
-
-std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {
-
-
-	return ( " ");
 }
 
 std::string	Solver::brackets( std::string rhs, int &i ) {
