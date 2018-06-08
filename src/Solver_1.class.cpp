@@ -39,6 +39,12 @@ double	Solver::find_var( std::string rhs ) {
 	}
 }
 
+std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {
+
+
+	return ( "" );
+}
+
 std::string	Solver::brackets( std::string rhs, int &i ) {
 	std::string	n;
 	int		j, temp= 0;
@@ -171,4 +177,4 @@ Solver::SolvExp	&Solver::SolvExp::operator=(SolvExp const &rhs) {
 	return ( *this );
 }
 
-Solver::SolvExp::~SolvExp() throw() {}
+Solver::SolvExp::~SolvExp() {}

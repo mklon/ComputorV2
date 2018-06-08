@@ -17,6 +17,8 @@
 
 class	Solver;
 
+
+
 class	Computor {
 private:
 	class CompExp : public std::exception {
@@ -36,6 +38,7 @@ private:
 	std::string						_line;
 	Solver							_solv;
 	std::map<std::string, double>	_var;
+	std::map<std::string, comp_n>	_com;
 	std::map<std::string, std::vector<std::vector<double >>>	_mat;
 
 public:

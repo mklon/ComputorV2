@@ -30,12 +30,11 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 	if ( isdigit( lhs[0] ) || lhs == "i" )
 		throw ( CompExp( "invalid variable name" ));
 
-
 	if ( rhs.find('[') != std::string::npos ) {
 		_solv.read_matrix( lhs, rhs );
 	}
 	else if ( rhs.find('i') != std::string::npos )
-		cout << "complex" << endl;
+		_solv.complex( lhs, rhs );
 	else
 		_solv.solve_line( lhs, rhs );
 }

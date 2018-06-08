@@ -22,6 +22,11 @@
 using	std::cout;
 using	std::endl;
 
+struct	comp_n {
+	double	a;
+	double	b;
+};
+
 class	Solver {
 private:
 	class SolvExp : public std::exception {
@@ -61,8 +66,12 @@ public:
 	std::vector<double>					rows( std::string rhs, int &i );
 	std::vector<std::vector<double>>	lines( std::string rhs, int &i );
 
-	void	set_var( std::map<std::string, double> *var );
-	void	set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat );
+	// Solve 3
+	void		complex( std::string lhs, std::string rhs );
+	comp_n		read_cm( std::string rhs );
+
+	void		set_var( std::map<std::string, double> *var );
+	void		set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat );
 
 	~Solver();
 };
