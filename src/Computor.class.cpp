@@ -13,11 +13,8 @@
 #include "../headers/Computor.class.hpp"
 
 Computor::Computor() {
-	_help.set_var( &_var );
-	_help.set_mat( &_mat );
-	_mtrx.set_var( &_var );
-	_mtrx.set_mat( &_mat );
-	_help.m = &_mtrx;
+	_solv.set_var( &_var );
+	_solv.set_mat( &_mat );
 }
 
 Computor::Computor( const Computor &rhs ) {
@@ -35,23 +32,22 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 
 
 	if ( rhs.find('[') != std::string::npos ) {
-		_mtrx.read_matrix( lhs, rhs );
+		_solv.read_matrix( lhs, rhs );
 	}
 	else if ( rhs.find('i') != std::string::npos )
 		cout << "complex" << endl;
 	else
-		_help.solve_line( lhs, rhs );
+		_solv.solve_line( lhs, rhs );
 }
 
 void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
 	int 				i = 0;
 	std::istringstream	iss( lhs );
 
-	if ( _help.cont_opr( lhs ) ) {
+	if ( _solv.cont_opr( lhs ) ) {
 		cout << "oper_handle" << endl;
 		return;
 	}
-
 	while ( iss ) {
 		iss >> lhs;
 		i++;

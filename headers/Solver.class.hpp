@@ -10,56 +10,61 @@
 //                                                                            //
 // ************************************************************************** //
 
-#ifndef HELPER_CLASS_HPP
-#define HELPER_CLASS_HPP
+#ifndef SOLVER_CLASS_HPP
+#define SOLVER_CLASS_HPP
 
-#include "Matrix.class.hpp"
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include <cmath>
 #include <map>
 
 using	std::cout;
 using	std::endl;
 
-class	Helper {
+class	Solver {
 private:
-	class HelpExp : public std::exception {
+	class SolvExp : public std::exception {
 	private:
 		std::string     _exptn_msg;
 	public:
-		HelpExp();
-		HelpExp( const std::string & text );
-		HelpExp( HelpExp const & rhs );
+		SolvExp();
+		SolvExp( const std::string & text );
+		SolvExp( SolvExp const & rhs );
 
-		HelpExp &	operator=( HelpExp const & rhs );
+		SolvExp &	operator=( SolvExp const & rhs );
 
 		const char	*what() const throw();
 
-		~HelpExp();
+		~SolvExp();
 	};
 	std::map<std::string, double>	*_var;
 	std::map<std::string, std::vector<std::vector<double >>>	*_mat;
 public:
-	Helper();
-	Helper( const Helper &rhs );
-	Helper	&operator=( const Helper &rhs );
+	Solver();
+	Solver( const Solver &rhs );
+	Solver	&operator=( const Solver &rhs );
 
-	Matrix	*m;
-
+	// Solve 1
 	bool	cont_opr( std::string rhs );
 	void	solve_line( std::string lhs, std::string rhs );
+	double	find_var( std::string rhs );
 	std::string	operation( std::string lhs, std::string rhs, char op );
 	std::string	summary( std::string rhs, int &i );
 	std::string	factor( std::string rhs, int &i );
+
+	// Solve 2
 	std::string	brackets( std::string rhs, int &i );
-	double	find_var( std::string rhs );
+	void	read_matrix( std::string lhs, std::string rhs );
+	void	size_check( std::vector<std::vector<double>> matrix );
+	void	display_mat( std::vector<std::vector<double>> matrix );
+	std::vector<std::vector<double>>	lines( std::string rhs, int &i );
+	std::vector<double>					rows( std::string rhs, int &i );
 
-	void	set_var( std::map<std::string, double> *_var );
+	void	set_var( std::map<std::string, double> *var );
+	void	set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat );
 
-	void set_mat( std::map<std::string, std::vector<std::vector<double>>> *_mat );
-
-	~Helper();
+	~Solver();
 };
 
 #endif

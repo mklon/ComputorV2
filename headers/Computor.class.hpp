@@ -13,15 +13,13 @@
 #ifndef COMPUTOR_CLASS_HPP
 #define	COMPUTOR_CLASS_HPP
 
-#include "Helper.class.hpp"
-#include "Matrix.class.hpp"
+#include "Solver.class.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include <map>
 
-class	Helper;
-class	Matrix;
+class	Solver;
 
 class	Computor {
 private:
@@ -40,8 +38,7 @@ private:
 		virtual ~CompExp() throw();
 	};
 	std::string						_line;
-	Helper							_help;
-	Matrix							_mtrx;
+	Solver							_solv;
 	std::map<std::string, double>	_var;
 	std::map<std::string, std::vector<std::vector<double >>>	_mat;
 

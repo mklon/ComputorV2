@@ -10,28 +10,28 @@
 //                                                                            //
 // ************************************************************************** //
 
-#include "../headers/Helper.class.hpp"
+#include "../headers/Solver.class.hpp"
 
-Helper::Helper() {}
+Solver::Solver() {}
 
-Helper::Helper( const Helper &rhs ) {
+Solver::Solver( const Solver &rhs ) {
 	*this = rhs;
 }
 
-Helper	&Helper::operator=( const Helper &rhs ) {
+Solver	&Solver::operator=( const Solver &rhs ) {
 	//!!!
 	return ( *this );
 }
 
-double	Helper::find_var( std::string rhs ) {
+double	Solver::find_var( std::string rhs ) {
 
 	if ( _var->find( rhs ) == _var->end() ) {
 		for ( int i = 0; i < rhs.size(); i++ )
 			if ( !isdigit( rhs[i] ) && rhs[i] != '.'&&
 					rhs[i] != '^' )
-				throw ( HelpExp( "unknown variable: " + rhs ));
+				throw ( SolvExp( "unknown variable: " + rhs ));
 		if ( rhs == "" )
-			throw ( HelpExp( "invalid rhs" ));
+			throw ( SolvExp( "invalid rhs" ));
 		return ( std::stod( rhs ));
 	}
 	else {
@@ -39,13 +39,13 @@ double	Helper::find_var( std::string rhs ) {
 	}
 }
 
-std::string	Helper::operation( std::string lhs, std::string rhs, char op ) {
+std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {
 
 
 	return ( " ");
 }
 
-std::string	Helper::brackets( std::string rhs, int &i ) {
+std::string	Solver::brackets( std::string rhs, int &i ) {
 	std::string	n;
 	int		j, temp= 0;
 
@@ -67,7 +67,7 @@ std::string	Helper::brackets( std::string rhs, int &i ) {
 	return ( temp1 );
 }
 
-std::string	Helper::factor( std::string rhs, int &i ) {
+std::string	Solver::factor( std::string rhs, int &i ) {
 	int 		place;
 	std::string	n1, n2;
 
@@ -85,7 +85,7 @@ std::string	Helper::factor( std::string rhs, int &i ) {
 	return ( n1 );
 }
 
-std::string	Helper::summary( std::string rhs, int &i ) {
+std::string	Solver::summary( std::string rhs, int &i ) {
 	int 		place;
 	std::string	n1,n2;
 
@@ -102,7 +102,7 @@ std::string	Helper::summary( std::string rhs, int &i ) {
 	return ( n1 );
 }
 
-void	Helper::solve_line( std::string lhs, std::string rhs ) {
+void	Solver::solve_line( std::string lhs, std::string rhs ) {
 	int					i = 0;
 	double				res;
 	std::string			temp;
@@ -113,19 +113,19 @@ void	Helper::solve_line( std::string lhs, std::string rhs ) {
 		if ( _var->find( lhs ) != _var->end() )
 			cout << _var->at( lhs ) << endl;
 		else if ( _mat->find( lhs ) != _mat->end() )
-			m->display_mat( _mat->at( lhs ));
+			display_mat( _mat->at( lhs ));
 		else
-			throw ( HelpExp( "unknown variable" ));
+			throw ( SolvExp( "unknown variable" ));
 		return;
 	}
 
 	if ( _mat->find( lhs ) != _mat->end() )
-		throw ( HelpExp( "can't put number in a matrix variable" ));
+		throw ( SolvExp( "can't put number in a matrix variable" ));
 
 	res = std::stod( summary( rhs, i ));
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
-			throw ( HelpExp( "invalid rhs" ));
+			throw ( SolvExp( "invalid rhs" ));
 
 	if ( _var->find( lhs ) != _var->end() )
 		_var->at( lhs ) = res;
@@ -134,7 +134,7 @@ void	Helper::solve_line( std::string lhs, std::string rhs ) {
 	cout << _var->at( lhs ) << endl;
 }
 
-bool	Helper::cont_opr( std::string rhs ) {
+bool	Solver::cont_opr( std::string rhs ) {
 	// + - * / %
 	if ( rhs.find( '+' ) != std::string::npos ||
 			rhs.find( '-' ) != std::string::npos ||
@@ -145,36 +145,36 @@ bool	Helper::cont_opr( std::string rhs ) {
 	return ( false );
 }
 
-Helper::~Helper() {}
-
-void	Helper::set_var( std::map<std::string, double> *_var ) {
-	Helper::_var = _var;
+void	Solver::set_var( std::map<std::string, double> *var ) {
+	this->_var = var;
 }
 
-void	Helper::set_mat( std::map<std::string, std::vector<std::vector<double>>> *_mat ) {
-	Helper::_mat = _mat;
+void	Solver::set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat ) {
+	this->_mat = mat;
 }
 
-// HelpExp
+Solver::~Solver() {}
 
-Helper::HelpExp::HelpExp() {}
+// SolvExp
+
+Solver::SolvExp::SolvExp() {}
 
 
-Helper::HelpExp::HelpExp( const std::string & text ) {
+Solver::SolvExp::SolvExp( const std::string & text ) {
 	this->_exptn_msg = text;
 }
 
-Helper::HelpExp::HelpExp(HelpExp const &rhs) {
+Solver::SolvExp::SolvExp(SolvExp const &rhs) {
 	*this = rhs;
 }
 
-const char	*Helper::HelpExp::what() const throw() {
+const char	*Solver::SolvExp::what() const throw() {
 	return ( this->_exptn_msg.c_str() );
 }
 
-Helper::HelpExp	&Helper::HelpExp::operator=(HelpExp const &rhs) {
+Solver::SolvExp	&Solver::SolvExp::operator=(SolvExp const &rhs) {
 	this->_exptn_msg = rhs._exptn_msg;
 	return ( *this );
 }
 
-Helper::HelpExp::~HelpExp() throw() {}
+Solver::SolvExp::~SolvExp() throw() {}

@@ -16,6 +16,7 @@ SOURCE =    src/main.cpp \
             src/Computor.class.cpp \
             src/Helper.class.cpp \
             src/Matrix.class.cpp \
+            src/Solver.class.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 
