@@ -27,6 +27,11 @@ struct	comp_n {
 	double	b;
 };
 
+struct	func{
+	std::string	name;
+	std::string	value;
+};
+
 class	Solver {
 private:
 	class SolvExp : public std::exception {
@@ -43,6 +48,7 @@ private:
 
 		~SolvExp();
 	};
+	std::map<std::string, func>		*_fun;
 	std::map<std::string, double>	*_var;
 	std::map<std::string, std::vector<std::vector<double >>>	*_mat;
 public:
@@ -67,9 +73,13 @@ public:
 	std::vector<std::vector<double>>	lines( std::string rhs, int &i );
 
 	// Solve 3
-	void		complex( std::string lhs, std::string rhs );
-	comp_n		read_cm( std::string rhs );
+	void		functions( std::string lhs, std::string rhs );
+	void		display_fun( std::string rhs );
+	void		func_check( std::string rhs );
 
+	void		complex( std::string lhs, std::string rhs ); // complex numbers
+
+	void		set_fun( std::map<std::string, func> *_fun );
 	void		set_var( std::map<std::string, double> *var );
 	void		set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat );
 

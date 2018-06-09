@@ -145,6 +145,10 @@ bool	Solver::cont_opr( std::string rhs ) {
 	return ( false );
 }
 
+void	Solver::set_fun( std::map<std::string, func> *fun ) {
+	this->_fun = fun;
+}
+
 void	Solver::set_var( std::map<std::string, double> *var ) {
 	this->_var = var;
 }

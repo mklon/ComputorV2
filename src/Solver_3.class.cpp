@@ -12,30 +12,64 @@
 
 #include "../headers/Solver.class.hpp"
 
-comp_n	Solver::read_cm( std::string rhs ) {
-	int 	i = 0, j;
-	comp_n	num;
+void	Solver::func_check( std::string rhs ) {
+	int		i = -1;
 
-	while ( rhs[i] == ' ' || rhs[i] == '\t' ) i++;
-	j = i;
-	while ( isalpha( rhs[j] ) ||
-			isdigit( rhs[j] ) ||
-			rhs[j] == '.' ) j++;
-
-	std::string	temp = rhs.substr( i, j - i );
-	while ( rhs[i] == ' ' || rhs[i] == '\t' ) i++;
-	if ( rhs[i] != '+' && rhs[i] != '-' && rhs[i] != '*' )
-		throw ( SolvExp( "invalid complex number definition" ));
-	if ( rhs[i] == '*' ) {
-		i++;
-
+	while ( ++i < rhs.size() ) {
+		if ( rhs[i] == '+' || rhs[i] == '*' ||
+			 rhs[i] == '/' || rhs[i] == '-' || rhs[i] == '^' ) {
+			while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
+			if ( rhs[i] == '+' || rhs[i] == '*' ||
+				 rhs[i] == '/' || rhs[i] == '-' || rhs[i] == '^' )
+				throw ( SolvExp( "invalid function definition" ));
+		}
+		if ( ( isdigit( rhs[i] ) || isalpha( rhs[i] )) &&
+				( rhs[i + 1] == ' ' || rhs[i + 1] == '\t')) {
+			i++;
+			while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
+			if ( rhs[i] != '+' && rhs[i] != '*' &&
+				 rhs[i] != '/' && rhs[i] != '-' && rhs[i] != '^' )
+				throw ( SolvExp( "invalid function definition" ));
+		}
 	}
-
-	return ( num );
 }
 
-void	Solver::complex( std::string lhs, std::string rhs ) {
-	comp_n	res;
+void	Solver::display_fun( std::string rhs ) {
+	int 	i = -1;
 
-	res = read_cm( rhs );
+	while ( ++i < rhs.size() ) {
+		if ( rhs[i] == ' ' || rhs[i] =='\t')
+			continue;
+		if ( rhs[i] == '+' || rhs[i] == '*' ||
+			 rhs[i] == '/' || rhs[i] == '-' )
+			cout << " ";
+		cout << rhs[i];
+		if ( rhs[i] == '+' || rhs[i] == '*' ||
+			 rhs[i] == '/' || rhs[i] == '-' )
+			cout << " ";
+	}
+	cout << endl;
+}
+
+void	Solver::functions( std::string lhs, std::string rhs ) {
+	auto	i = lhs.find( '(' );
+	func	res;
+	std::string	name, value;
+
+	if ( i == std::string::npos )
+		throw ( SolvExp( "invalid lhs F" ));
+	name = lhs.substr( 0, i );
+	value = lhs.substr( i + 1, lhs.size() - i - 2 );
+	if ( _var->find( name ) != _var->end() ||
+		_mat->find( name) != _mat->end() )
+		throw ( SolvExp( "reassigned variable with function" ));
+	res.name = name;
+	res.value = value;
+
+	//func_check( rhs );
+	if ( _fun->find( name ) != _fun->end() )
+		_fun->at( name ) = res;
+	else
+		_fun->insert( std::pair<std::string, func>( name, res ));
+	display_fun( rhs );
 }

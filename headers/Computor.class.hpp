@@ -35,8 +35,9 @@ private:
 
 		virtual ~CompExp() throw();
 	};
-	std::string						_line;
 	Solver							_solv;
+	std::string						_line;
+	std::map<std::string, func>		_fun;
 	std::map<std::string, double>	_var;
 	std::map<std::string, comp_n>	_com;
 	std::map<std::string, std::vector<std::vector<double >>>	_mat;

@@ -15,6 +15,7 @@
 Computor::Computor() {
 	_solv.set_var( &_var );
 	_solv.set_mat( &_mat );
+	_solv.set_fun( &_fun );
 }
 
 Computor::Computor( const Computor &rhs ) {
@@ -34,7 +35,7 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 		_solv.read_matrix( lhs, rhs );
 	}
 	else if ( rhs.find('i') != std::string::npos )
-		_solv.complex( lhs, rhs );
+		;// _solv.complex( lhs, rhs );
 	else
 		_solv.solve_line( lhs, rhs );
 }
@@ -49,12 +50,11 @@ void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
 	}
 	while ( iss ) {
 		iss >> lhs;
-		i++;
-		if ( i > 2 )
+		if ( ++i > 2 )
 			throw ( CompExp( "invalid variable name" ));
 	}
 	if ( lhs[lhs.size() - 1] == ')' )
-		cout << "func_handle" << endl;
+		_solv.functions( lhs, rhs );
 	else
 		var_handle( lhs, rhs );
 }
