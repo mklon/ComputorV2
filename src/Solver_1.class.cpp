@@ -39,12 +39,6 @@ double	Solver::find_var( std::string rhs ) {
 	}
 }
 
-std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {
-
-
-	return ( "" );
-}
-
 std::string	Solver::brackets( std::string rhs, int &i ) {
 	std::string	n;
 	int		j, temp= 0;
@@ -119,10 +113,10 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 		return;
 	}
 
-	if ( _mat->find( lhs ) != _mat->end() )
-		throw ( SolvExp( "can't put number in a matrix variable" ));
+	/*if ( _mat->find( lhs ) != _mat->end() )
+		throw ( SolvExp( "can't put number in a matrix variable" ));*/
 
-	res = std::stod( summary( rhs, i ));
+	res = find_var( summary( rhs, i ));
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
 			throw ( SolvExp( "invalid rhs" ));

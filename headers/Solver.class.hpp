@@ -62,7 +62,6 @@ public:
 	void		solve_line( std::string lhs, std::string rhs );
 	std::string	factor( std::string rhs, int &i );
 	std::string	summary( std::string rhs, int &i );
-	std::string	operation( std::string lhs, std::string rhs, char op );
 
 	// Solve 2
 	void		size_check( std::vector<std::vector<double>> matrix );
@@ -76,6 +75,12 @@ public:
 	void		functions( std::string lhs, std::string rhs );
 	void		display_fun( std::string rhs );
 	void		func_check( std::string rhs );
+
+	// Solve 4
+	std::string	operation( std::string lhs, std::string rhs, char op );
+	std::string	matrix_op( std::string lhs, std::string rhs, char op );
+	std::string	mat_n_mat( std::string lhs, std::string rhs, char op );
+	std::string	add_mat( std::string lhs, std::string rhs, char op );
 
 	void		complex( std::string lhs, std::string rhs ); // complex numbers
 
