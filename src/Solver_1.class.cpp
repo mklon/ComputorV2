@@ -12,7 +12,7 @@
 
 #include "../headers/Solver.class.hpp"
 
-Solver::Solver() {}
+Solver::Solver() : _count( 0 ) {}
 
 Solver::Solver( const Solver &rhs ) {
 	*this = rhs;
@@ -131,7 +131,8 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 		else if ( _var->find( lhs ) != _var->end() ) {
 			_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, _mat->at( rhs )));
 			_var->erase( lhs );
-		}
+		} else
+			_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, _mat->at( rhs )));
 		display_mat( _mat->at( lhs ));
 	}
 	else if ( _var->find( rhs ) != _var->end() ) {
@@ -146,7 +147,10 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 		cout << _var->at( lhs ) << endl;
 	}
 	else {
-		_var->insert( std::pair<std::string, double>( lhs , std::stod( rhs )));
+		if ( _var->find( lhs ) == _var->end() )
+			_var->insert( std::pair<std::string, double>( lhs , std::stod( rhs )));
+		else
+			_var->at( lhs ) = std::stod( rhs );
 		cout << _var->at( lhs ) << endl;
 	}
 

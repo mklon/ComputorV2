@@ -12,6 +12,17 @@
 
 #include "../headers/Solver.class.hpp"
 
+std::string	Solver::mat_n_var( std::string lhs, std::string rhs, char op ) {
+	if ( op == '+' || op == '-' ) {
+		if ( op == '+' )
+			throw ( SolvExp( "add matrix to number" ));
+		else
+			throw ( SolvExp( "subtract matrix and number" ));
+	}
+	if ( _mat->find( rhs ) != _mat->end() && op == '/' )
+		throw ( SolvExp( "divide number on matrix" ));
+}
+
 std::string	Solver::mult_mat( std::string lhs, std::string rhs, char op ) {
 	auto	ls = _mat->at( lhs );
 	auto	rs = _mat->at( rhs );
@@ -32,11 +43,12 @@ std::string	Solver::mult_mat( std::string lhs, std::string rhs, char op ) {
 		mid.push_back( temp );
 		temp.clear();
 	}
-	if ( _mat->find( "1_@" ) != _mat->end() )
-		_mat->at( "1_@" ) = mid;
+	std::string	name = std::to_string( _count++ ) + "_@";
+	if ( _mat->find( name ) != _mat->end() )
+		_mat->at( name ) = mid;
 	else
-		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( "1_@", mid ));
-	return ( "1_@" );
+		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( name, mid ));
+	return ( name );
 
 }
 
@@ -63,11 +75,12 @@ std::string	Solver::add_sub_mat( std::string lhs, std::string rhs, char op ) {
 		mid.push_back( temp );
 		temp.clear();
 	}
-	if ( _mat->find( "1_@" ) != _mat->end() )
-		_mat->at( "1_@" ) = mid;
+	std::string	name = std::to_string( _count++ ) + "_@";
+	if ( _mat->find( name ) != _mat->end() )
+		_mat->at( name ) = mid;
 	else
-		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( "1_@", mid ));
-	return ( "1_@" );
+		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( name, mid ));
+	return ( name );
 }
 
 std::string	Solver::mat_n_mat( std::string lhs, std::string rhs, char op ) {
@@ -82,7 +95,7 @@ std::string	Solver::mat_n_mat( std::string lhs, std::string rhs, char op ) {
 		return ( add_sub_mat( lhs, rhs, op ));
 	else if ( op == '*' )
 		return ( mult_mat( lhs, rhs, op ));
-	else if ( op == '/' );
+	else if ( op == '/' )
 		;
 }
 

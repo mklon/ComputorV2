@@ -48,6 +48,7 @@ private:
 
 		~SolvExp();
 	};
+	int 							_count;
 	std::map<std::string, func>		*_fun;
 	std::map<std::string, double>	*_var;
 	std::map<std::string, std::vector<std::vector<double >>>	*_mat;
@@ -83,6 +84,7 @@ public:
 	std::string	mat_n_mat( std::string lhs, std::string rhs, char op );
 	std::string	add_sub_mat( std::string lhs, std::string rhs, char op );
 	std::string	mult_mat( std::string lhs, std::string rhs, char op );
+	std::string	mat_n_var( std::string lhs, std::string rhs, char op );
 
 
 	void		complex( std::string lhs, std::string rhs ); // complex numbers
