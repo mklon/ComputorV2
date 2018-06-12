@@ -49,7 +49,7 @@ public:
 	void	run();
 	void	parse_line();
 	void	lhs_handle( std::string lhs, std::string rhs );
-	void	var_handle( std::string lhs ,std::string rhs );
+	void	var_handle( std::string lhs, std::string rhs );
 
 	~Computor();
 };

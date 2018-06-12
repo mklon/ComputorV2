@@ -117,19 +117,39 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
 			throw ( SolvExp( "invalid rhs" ));
 	result( lhs, res );
-	/*if ( _var->find( lhs ) != _var->end() )
-		_var->at( lhs ) = res;
-	else
-		_var->insert( std::pair<std::string, double>( lhs , res ));
-	cout << _var->at( lhs ) << endl;*/
 }
 
 void	Solver::result( std::string lhs, std::string rhs ) {
-	//!!!!!СЛОЖНО
-	if ( rhs[0] == '@' ) {
-		//matrix
+	//!!!!!СЛОЖН0
+
+	if ( _mat->find( rhs ) != _mat->end() ) {
+		if ( _mat->find( lhs ) != _mat->end() ) {
+			_mat->at( lhs ) = _mat->at( rhs );
+			if ( lhs != rhs )
+				_mat->erase( rhs );
+		}
+		else if ( _var->find( lhs ) != _var->end() ) {
+			_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, _mat->at( rhs )));
+			_var->erase( lhs );
+		}
+		display_mat( _mat->at( lhs ));
 	}
-	
+	else if ( _var->find( rhs ) != _var->end() ) {
+		if ( _var->find( lhs ) != _var->end() ) {
+			_var->at( lhs ) = _var->at( rhs );
+			_var->erase( rhs );
+		}
+		else if ( _mat->find( lhs ) != _mat->end() ) {
+			_var->insert( std::pair<std::string, double >( lhs, _var->at( rhs )));
+			_mat->erase( lhs );
+		}
+		cout << _var->at( lhs ) << endl;
+	}
+	else {
+		_var->insert( std::pair<std::string, double>( lhs , std::stod( rhs )));
+		cout << _var->at( lhs ) << endl;
+	}
+
 }
 
 bool	Solver::cont_opr( std::string rhs ) {

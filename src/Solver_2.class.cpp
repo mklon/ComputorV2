@@ -97,5 +97,5 @@ void	Solver::read_matrix( std::string lhs, std::string rhs ) {
 		_mat->at( lhs ) = res;
 	else
 		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, res ));
-	display_mat( res );
+	result( lhs, lhs );
 }
