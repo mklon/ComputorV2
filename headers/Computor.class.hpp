@@ -17,8 +17,6 @@
 
 class	Solver;
 
-
-
 class	Computor {
 private:
 	class CompExp : public std::exception {

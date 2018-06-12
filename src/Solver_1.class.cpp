@@ -28,7 +28,7 @@ double	Solver::find_var( std::string rhs ) {
 	if ( _var->find( rhs ) == _var->end() ) {
 		for ( int i = 0; i < rhs.size(); i++ )
 			if ( !isdigit( rhs[i] ) && rhs[i] != '.'&&
-					rhs[i] != '^' )
+					rhs[i] != '^' && rhs[i] != '-' )
 				throw ( SolvExp( "unknown variable: " + rhs ));
 		if ( rhs == "" )
 			throw ( SolvExp( "invalid rhs" ));
@@ -98,7 +98,7 @@ std::string	Solver::summary( std::string rhs, int &i ) {
 
 void	Solver::solve_line( std::string lhs, std::string rhs ) {
 	int					i = 0;
-	double				res;
+	std::string			res;
 	std::string			temp;
 	std::istringstream	iss( rhs );
 
@@ -112,20 +112,24 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 			throw ( SolvExp( "unknown variable" ));
 		return;
 	}
-
-	/*if ( _mat->find( lhs ) != _mat->end() )
-		throw ( SolvExp( "can't put number in a matrix variable" ));*/
-
-	res = find_var( summary( rhs, i ));
+	res = summary( rhs, i );
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
 			throw ( SolvExp( "invalid rhs" ));
-
-	if ( _var->find( lhs ) != _var->end() )
+	result( lhs, res );
+	/*if ( _var->find( lhs ) != _var->end() )
 		_var->at( lhs ) = res;
 	else
 		_var->insert( std::pair<std::string, double>( lhs , res ));
-	cout << _var->at( lhs ) << endl;
+	cout << _var->at( lhs ) << endl;*/
+}
+
+void	Solver::result( std::string lhs, std::string rhs ) {
+	//!!!!!СЛОЖНО
+	if ( rhs[0] == '@' ) {
+		//matrix
+	}
+	
 }
 
 bool	Solver::cont_opr( std::string rhs ) {

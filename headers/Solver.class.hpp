@@ -58,8 +58,9 @@ public:
 
 	// Solve 1
 	bool		cont_opr( std::string rhs );
-	double		find_var( std::string rhs );
+	void		result( std::string lhs, std::string rhs );
 	void		solve_line( std::string lhs, std::string rhs );
+	double		find_var( std::string rhs );
 	std::string	factor( std::string rhs, int &i );
 	std::string	summary( std::string rhs, int &i );
 
@@ -80,7 +81,9 @@ public:
 	std::string	operation( std::string lhs, std::string rhs, char op );
 	std::string	matrix_op( std::string lhs, std::string rhs, char op );
 	std::string	mat_n_mat( std::string lhs, std::string rhs, char op );
-	std::string	add_mat( std::string lhs, std::string rhs, char op );
+	std::string	add_sub_mat( std::string lhs, std::string rhs, char op );
+	std::string	mult_mat( std::string lhs, std::string rhs, char op );
+
 
 	void		complex( std::string lhs, std::string rhs ); // complex numbers
 

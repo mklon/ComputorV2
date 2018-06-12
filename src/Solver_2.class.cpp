@@ -42,7 +42,7 @@ std::vector<double>	Solver::rows( std::string rhs, int &i ) {
 		j = i;
 
 		while ( rhs[j] != ',' && rhs[j] != ']' && rhs[j] != ' ' ) {
-			if ( !isdigit( rhs[i] ) && rhs[i] != '.' && !isalpha( rhs[i] ))
+			if ( !isdigit( rhs[i] ) && rhs[i] != '-' && rhs[i] != '.' && !isalpha( rhs[i] ))
 				throw ( SolvExp( "unknown variable" ));
 			j++;
 		}

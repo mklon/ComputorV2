@@ -79,7 +79,6 @@ void	Computor::run() {
 			cout << e.what() << endl;
 		}
 	}
-
 }
 
 Computor::~Computor() {}
