@@ -72,6 +72,17 @@ void	Solver::replcae_str( std::string lhs, std::string rhs ) {
 	func_check( rhs );
 }
 
+void	Solver::func_info( std::string lhs, std::string value, std::string rhs ) {
+	int		i = 0;
+
+	if ( _fun->find( lhs ) == _fun->end() )
+		throw ( SolvExp( "unknown function" ));
+	if ( _mat->find( value ) != _mat->end() )
+		throw ( SolvExp( "matrix as function argument" ));
+
+	cout << std::stod( func_sum( lhs, value )) << endl;
+}
+
 void	Solver::functions( std::string lhs, std::string rhs ) {
 	auto		i = lhs.find( '(' );
 	func		res;
@@ -81,6 +92,11 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 		throw ( SolvExp( "invalid lhs F" ));
 	name = lhs.substr( 0, i );
 	value = lhs.substr( i + 1, lhs.size() - i - 2 );
+
+	if ( rhs.find('?') != std::string::npos ) {
+		func_info( name, value, rhs );
+		return;
+	}
 	if ( _var->find( name ) != _var->end() ||
 		_mat->find( name) != _mat->end() )
 		throw ( SolvExp( "reassigned variable with function" ));
