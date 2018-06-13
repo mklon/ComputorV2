@@ -23,8 +23,8 @@ void	Solver::func_check( std::string rhs ) {
 				 rhs[i] == '/' || rhs[i] == '-' || rhs[i] == '^' )
 				throw ( SolvExp( "invalid function definition" ));
 		}
-		if ( ( isdigit( rhs[i] ) || isalpha( rhs[i] )) &&
-				( rhs[i + 1] == ' ' || rhs[i + 1] == '\t')) {
+		if (( isdigit( rhs[i] ) && ( rhs[i + 1] == ' ' ||
+				rhs[i + 1] == '\t')) || rhs[i] == '@') {
 			i++;
 			while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 			if ( rhs[i] != '+' && rhs[i] != '*' &&
@@ -51,6 +51,25 @@ void	Solver::display_fun( std::string rhs ) {
 	cout << endl;
 }
 
+void	Solver::replcae_str( std::string lhs, std::string rhs ) {
+	for ( auto i = 0; i < lhs.size(); i++ ) {
+		if ( !isalpha( lhs[i] ))
+			throw ( SolvExp( "invalid function value" ));
+	}
+	for ( auto i = rhs.find( lhs ); i != std::string::npos; i = rhs.find( lhs, i + 1 ))
+		rhs.replace( i, lhs.size(), "@" );
+	for ( auto i = 0; i < rhs.size(); i++ ) {
+		if ( !isdigit( rhs[i] ) && rhs[i] != ' '
+			 && rhs[i] != '\t' && rhs[i] != '+'
+			 && rhs[i] != '-' && rhs[i] != '/'
+			 && rhs[i] != '*' && rhs[i] != '%'
+			 && rhs[i] != '^' && rhs[i] != '@'
+			 && rhs[i] != '(' && rhs[i] != ')')
+			throw ( SolvExp( "invalid function" ));
+	}
+	func_check( rhs );
+}
+
 void	Solver::functions( std::string lhs, std::string rhs ) {
 	auto	i = lhs.find( '(' );
 	func	res;
@@ -66,7 +85,7 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 	res.name = name;
 	res.value = value;
 
-	//func_check( rhs );
+	replcae_str( value, rhs );
 	if ( _fun->find( name ) != _fun->end() )
 		_fun->at( name ) = res;
 	else

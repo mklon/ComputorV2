@@ -13,8 +13,10 @@
 #ifndef SOLVER_CLASS_HPP
 #define SOLVER_CLASS_HPP
 
+#include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <string>
 #include <vector>
 #include <cmath>
 #include <map>
@@ -77,6 +79,7 @@ public:
 	void		functions( std::string lhs, std::string rhs );
 	void		display_fun( std::string rhs );
 	void		func_check( std::string rhs );
+	void		replcae_str( std::string lhs, std::string rhs );
 
 	// Solve 4
 	std::string	operation( std::string lhs, std::string rhs, char op );

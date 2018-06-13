@@ -143,7 +143,8 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 		else if ( _mat->find( lhs ) != _mat->end() ) {
 			_var->insert( std::pair<std::string, double >( lhs, _var->at( rhs )));
 			_mat->erase( lhs );
-		}
+		} else
+			_var->insert( std::pair<std::string, double>( lhs , _var->at( rhs )));
 		cout << _var->at( lhs ) << endl;
 	}
 	else {

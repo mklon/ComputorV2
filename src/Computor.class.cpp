@@ -28,8 +28,11 @@ Computor	&Computor::operator=( const Computor &rhs ) {
 }
 
 void	Computor::var_handle( std::string lhs, std::string rhs ) {
-	if ( isdigit( lhs[0] ) || lhs == "i" )
-		throw ( CompExp( "invalid variable name" ));
+	for ( auto i = 0; i < lhs.size(); i++ ) {
+		if ( !isalpha( lhs[i] ) || lhs == "i" )
+			throw ( CompExp( "invalid variable name" ));
+
+	}
 
 	if ( rhs.find('[') != std::string::npos ) {
 		_solv.read_matrix( lhs, rhs );
@@ -62,6 +65,9 @@ void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
 void	Computor::parse_line() {
 	unsigned long int	i;
 	std::string			part;
+
+	for ( auto j = 0; j < _line.size(); j++ )
+		_line[j] = tolower( _line[j] );
 	if ( _line == "" )
 		return;
 	if (( i = _line.find( '=' )) == std::string::npos )
