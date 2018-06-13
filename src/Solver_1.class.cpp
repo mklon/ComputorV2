@@ -132,6 +132,9 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 			throw ( SolvExp( "unknown variable" ));
 		return;
 	}
+	if ( _fun->find( lhs ) != _fun->end() )
+		throw ( SolvExp( "reassigned function with variable" ));
+
 	res = summary( rhs, i );
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )

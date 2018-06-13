@@ -106,10 +106,24 @@ std::string	Solver::func_sum( std::string lhs, std::string rhs ) {
 }
 
 std::string	Solver::solve_func( std::string lhs, std::string rhs, int &i ) {
+	int		pos = 0, buf = 0;
+
 	if ( rhs.find( ')' ) == std::string::npos )
 		throw ( SolvExp( "invalid rhs" ));
-	std::string	value = rhs.substr( i + 1, rhs.find(')') - i - 1 );
-	i = rhs.find(')') + 1;
+	for ( auto j = i + 1; j < rhs.size(); j++ ) {
+		if ( rhs[j] == '(' )
+			buf++;
+		else if ( rhs[j] == ')' && buf )
+			buf--;
+		else if ( j + 1 == rhs.size() && buf )
+			throw ( SolvExp( "invalid rhs" ));
+		else if ( rhs[j] == ')' && !buf ) {
+			pos = j;
+			break;
+		}
+	}
+	std::string	value = rhs.substr( i + 1, pos - i - 1 );
+	i = pos + 1;
 	if ( _fun->find( lhs ) == _fun->end() )
 		throw ( SolvExp( "unknown function" ));
 	if ( _mat->find( value ) != _mat->end() )
