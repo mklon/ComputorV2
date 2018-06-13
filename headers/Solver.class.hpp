@@ -13,10 +13,8 @@
 #ifndef SOLVER_CLASS_HPP
 #define SOLVER_CLASS_HPP
 
-#include <algorithm>
 #include <iostream>
 #include <sstream>
-#include <string>
 #include <vector>
 #include <cmath>
 #include <map>
@@ -64,6 +62,8 @@ public:
 	void		result( std::string lhs, std::string rhs );
 	void		solve_line( std::string lhs, std::string rhs );
 	double		find_var( std::string rhs );
+	std::string	brackets( std::string rhs, int &i );
+	std::string	power( std::string rhs, int &i );
 	std::string	factor( std::string rhs, int &i );
 	std::string	summary( std::string rhs, int &i );
 
@@ -71,7 +71,6 @@ public:
 	void		size_check( std::vector<std::vector<double>> matrix );
 	void		read_matrix( std::string lhs, std::string rhs );
 	void		display_mat( std::vector<std::vector<double>> matrix );
-	std::string	brackets( std::string rhs, int &i );
 	std::vector<double>					rows( std::string rhs, int &i );
 	std::vector<std::vector<double>>	lines( std::string rhs, int &i );
 

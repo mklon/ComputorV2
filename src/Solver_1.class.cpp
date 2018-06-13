@@ -58,10 +58,12 @@ std::string	Solver::brackets( std::string rhs, int &i ) {
 			rhs[j + temp] == '.' ) temp++;
 	i += temp;
 	std::string	temp1 = rhs.substr( i - temp, i - j );
+	if ( rhs[i] == '(' )
+		cout << "func" <<endl;
 	return ( temp1 );
 }
 
-std::string	Solver::factor( std::string rhs, int &i ) {
+std::string	Solver::power( std::string rhs, int &i ) {
 	int 		place;
 	std::string	n1, n2;
 
@@ -69,10 +71,28 @@ std::string	Solver::factor( std::string rhs, int &i ) {
 	while ( i < rhs.size() ) {
 		while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 		place = i;
-		if ( rhs[i] != '*' && rhs[i] != '/' && rhs[i] != '%' && rhs[i] !='^' )
+		if ( rhs[i] != '^' )
 			return ( n1 );
 		i++;
 		n2 = brackets( rhs, i );
+		n1 = operation( n1, n2, rhs[place] );
+
+	}
+	return ( n1 );
+}
+
+std::string	Solver::factor( std::string rhs, int &i ) {
+	int 		place;
+	std::string	n1, n2;
+
+	n1 = power( rhs, i );
+	while ( i < rhs.size() ) {
+		while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
+		place = i;
+		if ( rhs[i] != '*' && rhs[i] != '/' && rhs[i] != '%' )
+			return ( n1 );
+		i++;
+		n2 = power( rhs, i );
 		n1 = operation( n1, n2, rhs[place] );
 
 	}
@@ -144,7 +164,7 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 			_var->insert( std::pair<std::string, double >( lhs, _var->at( rhs )));
 			_mat->erase( lhs );
 		} else
-			_var->insert( std::pair<std::string, double>( lhs , _var->at( rhs )));
+			_var->insert( std::pair<std::string, double >( lhs, _var->at( rhs )));
 		cout << _var->at( lhs ) << endl;
 	}
 	else {
