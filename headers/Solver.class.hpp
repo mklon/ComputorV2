@@ -79,6 +79,8 @@ public:
 	void		display_fun( std::string rhs );
 	void		func_check( std::string rhs );
 	void		replcae_str( std::string lhs, std::string rhs );
+	std::string	func_sum( std::string lhs, std::string rhs );
+	std::string	solve_func( std::string lhs, std::string rhs, int &i );
 
 	// Solve 4
 	std::string	operation( std::string lhs, std::string rhs, char op );

@@ -18,6 +18,7 @@ void	Solver::func_check( std::string rhs ) {
 	while ( ++i < rhs.size() ) {
 		if ( rhs[i] == '+' || rhs[i] == '*' ||
 			 rhs[i] == '/' || rhs[i] == '-' || rhs[i] == '^' ) {
+			i++;
 			while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 			if ( rhs[i] == '+' || rhs[i] == '*' ||
 				 rhs[i] == '/' || rhs[i] == '-' || rhs[i] == '^' )
@@ -27,7 +28,7 @@ void	Solver::func_check( std::string rhs ) {
 				rhs[i + 1] == '\t')) || rhs[i] == '@') {
 			i++;
 			while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
-			if ( rhs[i] != '+' && rhs[i] != '*' && rhs[i] != '/'
+			if ( rhs[i] != '+' && rhs[i] != '*' && rhs[i] != '/' && rhs[i] != ')'
 				 && rhs[i] != '-' && rhs[i] != '^' && i < rhs.size() )
 				throw ( SolvExp( "invalid function definition" ));
 		}
@@ -72,8 +73,8 @@ void	Solver::replcae_str( std::string lhs, std::string rhs ) {
 }
 
 void	Solver::functions( std::string lhs, std::string rhs ) {
-	auto	i = lhs.find( '(' );
-	func	res;
+	auto		i = lhs.find( '(' );
+	func		res;
 	std::string	name, value;
 
 	if ( i == std::string::npos )
@@ -92,4 +93,26 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 	else
 		_fun->insert( std::pair<std::string, func>( name, res ));
 	display_fun( rhs );
+}
+
+std::string	Solver::func_sum( std::string lhs, std::string rhs ) {
+	int 		j = 0;
+	std::string	polynomial = _fun->at( lhs ).value;
+
+	for ( auto i = polynomial.find( _fun->at( lhs ).name );
+		  i != std::string::npos; i = polynomial.find( _fun->at( lhs ).name, i + 1 ))
+		polynomial.replace( i, _fun->at( lhs ).name.size(), "(" + rhs + ")" );
+	return ( summary( polynomial, j ));
+}
+
+std::string	Solver::solve_func( std::string lhs, std::string rhs, int &i ) {
+	if ( rhs.find( ')' ) == std::string::npos )
+		throw ( SolvExp( "invalid rhs" ));
+	std::string	value = rhs.substr( i + 1, rhs.find(')') - i - 1 );
+	i = rhs.find(')') + 1;
+	if ( _fun->find( lhs ) == _fun->end() )
+		throw ( SolvExp( "unknown function" ));
+	if ( _mat->find( value ) != _mat->end() )
+		throw ( SolvExp( "matrix as function argument" ));
+	return ( func_sum( lhs, value ));
 }

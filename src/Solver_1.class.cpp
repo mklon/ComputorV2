@@ -57,10 +57,10 @@ std::string	Solver::brackets( std::string rhs, int &i ) {
 			isalpha( rhs[j + temp] ) ||
 			rhs[j + temp] == '.' ) temp++;
 	i += temp;
-	std::string	temp1 = rhs.substr( i - temp, i - j );
+	std::string	sub = rhs.substr( i - temp, i - j );
 	if ( rhs[i] == '(' )
-		cout << "func" <<endl;
-	return ( temp1 );
+		return ( solve_func( sub, rhs, i ));
+	return ( sub );
 }
 
 std::string	Solver::power( std::string rhs, int &i ) {
