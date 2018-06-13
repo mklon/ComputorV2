@@ -27,8 +27,8 @@ void	Solver::func_check( std::string rhs ) {
 				rhs[i + 1] == '\t')) || rhs[i] == '@') {
 			i++;
 			while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
-			if ( rhs[i] != '+' && rhs[i] != '*' &&
-				 rhs[i] != '/' && rhs[i] != '-' && rhs[i] != '^' )
+			if ( rhs[i] != '+' && rhs[i] != '*' && rhs[i] != '/'
+				 && rhs[i] != '-' && rhs[i] != '^' && i < rhs.size() )
 				throw ( SolvExp( "invalid function definition" ));
 		}
 	}
@@ -64,7 +64,8 @@ void	Solver::replcae_str( std::string lhs, std::string rhs ) {
 			 && rhs[i] != '-' && rhs[i] != '/'
 			 && rhs[i] != '*' && rhs[i] != '%'
 			 && rhs[i] != '^' && rhs[i] != '@'
-			 && rhs[i] != '(' && rhs[i] != ')')
+			 && rhs[i] != '(' && rhs[i] != ')'
+				&& rhs[i] != '.')
 			throw ( SolvExp( "invalid function" ));
 	}
 	func_check( rhs );
@@ -82,8 +83,8 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 	if ( _var->find( name ) != _var->end() ||
 		_mat->find( name) != _mat->end() )
 		throw ( SolvExp( "reassigned variable with function" ));
-	res.name = name;
-	res.value = value;
+	res.name = value;
+	res.value = rhs;
 
 	replcae_str( value, rhs );
 	if ( _fun->find( name ) != _fun->end() )
