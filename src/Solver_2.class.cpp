@@ -12,26 +12,6 @@
 
 #include "../headers/Solver.class.hpp"
 
-void	Solver::display_mat( std::vector<std::vector<double>> matrix ) {
-	for ( int i = 0; i < matrix.size(); i++ ) {
-		cout << "[ ";
-		for ( int j = 0; j < matrix[i].size(); j++ ) {
-			cout << matrix[i][j];
-			if ( j != matrix[i].size() - 1 )
-				cout << " , ";
-		}
-		cout << " ]" << endl;
-	}
-}
-
-void	Solver::size_check( std::vector<std::vector<double>> matrix ) {
-	int		size = matrix[0].size();
-
-	for ( int i = 1; i < matrix.size(); i++ )
-		if ( matrix[i].size() != size )
-			throw ( SolvExp( "invalid matrix definition" ));
-}
-
 std::vector<double>	Solver::rows( std::string rhs, int &i ) {
  	int		j;
 	std::vector<double>	row;
@@ -77,7 +57,7 @@ std::vector<std::vector<double>>	Solver::lines( std::string rhs, int &i ) {
 			break;
 		i++;
 	}
-	size_check( line );
+	get_help().size_check( line );
 	return ( line );
 }
 

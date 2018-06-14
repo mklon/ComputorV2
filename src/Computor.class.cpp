@@ -44,22 +44,16 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 }
 
 void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
-	int 				i = 0;
-	std::istringstream	iss( lhs );
-
-	if ( _solv.cont_opr( lhs ) ) {
+	if ( _solv.get_help().cont_opr( lhs ) ) {
 		cout << "oper_handle" << endl;
 		return;
 	}
-	while ( iss ) {
-		iss >> lhs;
-		if ( ++i > 2 )
-			throw ( CompExp( "invalid variable name" ));
-	}
-	if ( lhs[lhs.size() - 1] == ')' )
+	lhs = _solv.word_split( lhs );
+	if ( lhs[lhs.size() - 1] == ')' ) {
 		_solv.functions( lhs, rhs );
-	else
-		var_handle( lhs, rhs );
+		return;
+	}
+	var_handle( lhs, rhs );
 }
 
 void	Computor::parse_line() {

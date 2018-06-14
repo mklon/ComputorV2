@@ -127,7 +127,7 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 		if ( _var->find( lhs ) != _var->end() )
 			cout << _var->at( lhs ) << endl;
 		else if ( _mat->find( lhs ) != _mat->end() )
-			display_mat( _mat->at( lhs ));
+			get_help().display_mat( _mat->at( lhs ));
 		else
 			throw ( SolvExp( "unknown variable" ));
 		return;
@@ -156,7 +156,7 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 			_var->erase( lhs );
 		} else
 			_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, _mat->at( rhs )));
-		display_mat( _mat->at( lhs ));
+		get_help().display_mat( _mat->at( lhs ));
 	}
 	else if ( _var->find( rhs ) != _var->end() ) {
 		if ( _var->find( lhs ) != _var->end() ) {
@@ -164,10 +164,10 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 			_var->erase( rhs );
 		}
 		else if ( _mat->find( lhs ) != _mat->end() ) {
-			_var->insert( std::pair<std::string, double >( lhs, _var->at( rhs )));
+			_var->insert( std::pair<std::string, double>( lhs, _var->at( rhs )));
 			_mat->erase( lhs );
 		} else
-			_var->insert( std::pair<std::string, double >( lhs, _var->at( rhs )));
+			_var->insert( std::pair<std::string, double>( lhs, _var->at( rhs )));
 		cout << _var->at( lhs ) << endl;
 	}
 	else {
@@ -177,18 +177,10 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 			_var->at( lhs ) = std::stod( rhs );
 		cout << _var->at( lhs ) << endl;
 	}
-
 }
 
-bool	Solver::cont_opr( std::string rhs ) {
-	// + - * / %
-	if ( rhs.find( '+' ) != std::string::npos ||
-			rhs.find( '-' ) != std::string::npos ||
-			rhs.find( '*' ) != std::string::npos ||
-			rhs.find( '/' ) != std::string::npos ||
-			rhs.find( '%' ) != std::string::npos )
-		return ( true );
-	return ( false );
+Helper	&Solver::get_help() {
+	return ( _help );
 }
 
 void	Solver::set_fun( std::map<std::string, func> *fun ) {

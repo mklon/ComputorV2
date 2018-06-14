@@ -17,6 +17,7 @@ SOURCE =    src/main.cpp \
             src/Solver_1.class.cpp \
             src/Solver_2.class.cpp \
             src/Solver_4.class.cpp \
+            src/Helper.class.cpp \
 
 
 OBJECTS = $(SOURCE:.cpp=.o)

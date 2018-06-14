@@ -13,24 +13,9 @@
 #ifndef SOLVER_CLASS_HPP
 #define SOLVER_CLASS_HPP
 
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <cmath>
-#include <map>
 
-using	std::cout;
-using	std::endl;
+#include "Helper.class.hpp"
 
-struct	comp_n {
-	double	a;
-	double	b;
-};
-
-struct	func{
-	std::string	name;
-	std::string	value;
-};
 
 class	Solver {
 private:
@@ -49,6 +34,7 @@ private:
 		~SolvExp();
 	};
 	int 							_count;
+	Helper							_help;
 	std::map<std::string, func>		*_fun;
 	std::map<std::string, double>	*_var;
 	std::map<std::string, std::vector<std::vector<double >>>	*_mat;
@@ -58,7 +44,6 @@ public:
 	Solver	&operator=( const Solver &rhs );
 
 	// Solve 1
-	bool		cont_opr( std::string rhs );
 	void		result( std::string lhs, std::string rhs );
 	void		solve_line( std::string lhs, std::string rhs );
 	double		find_var( std::string rhs );
@@ -68,17 +53,12 @@ public:
 	std::string	summary( std::string rhs, int &i );
 
 	// Solve 2
-	void		size_check( std::vector<std::vector<double>> matrix );
 	void		read_matrix( std::string lhs, std::string rhs );
-	void		display_mat( std::vector<std::vector<double>> matrix );
-	std::vector<double>					rows( std::string rhs, int &i );
-	std::vector<std::vector<double>>	lines( std::string rhs, int &i );
+	std::vector<double>					rows( std::string rhs, int &i );	//H
+	std::vector<std::vector<double>>	lines( std::string rhs, int &i );	//H
 
 	// Solve 3
 	void		functions( std::string lhs, std::string rhs );
-	void		display_fun( std::string rhs );
-	void		func_check( std::string rhs );
-	void		replcae_str( std::string lhs, std::string rhs );
 	void		func_info( std::string lhs, std::string value, std::string rhs );
 	std::string	func_sum( std::string lhs, std::string rhs );
 	std::string	solve_func( std::string lhs, std::string rhs, int &i );
@@ -97,6 +77,10 @@ public:
 	void		set_fun( std::map<std::string, func> *_fun );
 	void		set_var( std::map<std::string, double> *var );
 	void		set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat );
+	Helper		&get_help();
+
+
+	std::string	word_split( std::string rhs );
 
 	~Solver();
 };
