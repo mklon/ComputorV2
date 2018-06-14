@@ -143,13 +143,13 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 }
 
 void	Solver::result( std::string lhs, std::string rhs ) {
-	//!!!!!СЛОЖН0
-
 	if ( _mat->find( rhs ) != _mat->end() ) {
 		if ( _mat->find( lhs ) != _mat->end() ) {
 			_mat->at( lhs ) = _mat->at( rhs );
 			if ( lhs != rhs )
 				_mat->erase( rhs );
+			if ( _var->find( lhs ) != _var->end() )
+				_var->erase( lhs );
 		}
 		else if ( _var->find( lhs ) != _var->end() ) {
 			_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, _mat->at( rhs )));
@@ -180,6 +180,8 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 			_var->insert( std::pair<std::string, double>( lhs , std::stod( rhs )));
 		else
 			_var->at( lhs ) = std::stod( rhs );
+		if ( _mat->find( lhs ) != _mat->end() )
+			_mat->erase( lhs );
 		cout << _var->at( lhs ) << endl;
 	}
 }
@@ -187,6 +189,16 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 Helper	&Solver::get_help() {
 	return ( _help );
 }
+
+
+int		Solver::get_count() const {
+	return _count;
+}
+
+void	Solver::set_count( int _count ) {
+	Solver::_count = _count;
+}
+
 
 void	Solver::set_fun( std::map<std::string, func> *fun ) {
 	this->_fun = fun;

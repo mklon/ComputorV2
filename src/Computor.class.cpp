@@ -27,6 +27,14 @@ Computor	&Computor::operator=( const Computor &rhs ) {
 	return ( *this );
 }
 
+void	Computor::clear() {
+	if ( _solv.get_count() )
+		for ( int i = 0; i < _solv.get_count(); i++ ) {
+			_mat.erase( "@" + std::to_string(i) );
+		}
+	_solv.set_count( 0 );
+}
+
 void	Computor::var_handle( std::string lhs, std::string rhs ) {
 	for ( auto i = 0; i < lhs.size(); i++ ) {
 		if ( !isalpha( lhs[i] ) || lhs == "i" )
@@ -66,7 +74,7 @@ void	Computor::parse_line() {
 	if (( i = _line.find( '=' )) == std::string::npos )
 		throw ( CompExp( "missing equality symbol" ) );
 	lhs_handle( _line.substr( 0, i ), _line.substr( i + 1 ));
-
+	clear();
 }
 
 void	Computor::run() {

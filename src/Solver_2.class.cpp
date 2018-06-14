@@ -65,9 +65,6 @@ void	Solver::read_matrix( std::string lhs, std::string rhs ) {
 	int 	i = 0;
 	std::vector<std::vector<double>>	res;
 
-	if ( _var->find( lhs ) != _var->end() )
-		throw ( SolvExp( "can't put the matrix in a numerical variable" ));
-
 	res = lines( rhs, i );
 	while ( ++i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i] != '\t' )

@@ -13,15 +13,43 @@
 #include "../headers/Solver.class.hpp"
 
 std::string	Solver::mat_n_var( std::string lhs, std::string rhs, char op ) {
+	int 								i = 0;
+	double								num, temp;
+	std::vector<double>					md;
+	std::vector<std::vector<double>>	mid;
+
 	if ( op == '+' || op == '-' ) {
 		if ( op == '+' )
 			throw ( SolvExp( "add matrix to number" ));
 		else
 			throw ( SolvExp( "subtract matrix and number" ));
 	}
-	if ( _mat->find( rhs ) != _mat->end() && op == '/' )
-		throw ( SolvExp( "divide number on matrix" ));
-	return ( "" );
+	if ( _mat->find( rhs ) != _mat->end() ) {
+		if ( op == '/' )
+			throw ( SolvExp( "divide number on matrix" ));
+		else
+			throw ( SolvExp( "multiply number on matrix" ));
+	}
+	auto	ls = _mat->at( lhs );
+	num = std::stod( summary( rhs, i ));
+
+	for ( int i = 0; i < ls.size(); i++ ) {
+		for ( int j = 0; j < ls[0].size(); j++ ) {
+			if ( op == '*' )
+				temp = ls[i][j] * num;
+			else
+				temp = ls[i][j] / num;
+			md.push_back(temp);
+		}
+		mid.push_back( md );
+		md.clear();
+	}
+	std::string	name = "@" + std::to_string( _count++ );
+	if ( _mat->find( name ) != _mat->end() )
+		_mat->at( name ) = mid;
+	else
+		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( name, mid ));
+	return ( name );
 }
 
 std::string	Solver::mult_mat( std::string lhs, std::string rhs, char op ) {
@@ -33,7 +61,6 @@ std::string	Solver::mult_mat( std::string lhs, std::string rhs, char op ) {
 	double 								res = 0;
 	std::vector<double>					temp;
 	std::vector<std::vector<double>>	mid;
-
 	for ( int i = 0; i < ls.size(); i++ ) {
 		for ( int j = 0; j < rs[0].size(); j++ ) {
 			for ( int a = 0; a < rs.size(); a++ )
@@ -44,13 +71,12 @@ std::string	Solver::mult_mat( std::string lhs, std::string rhs, char op ) {
 		mid.push_back( temp );
 		temp.clear();
 	}
-	std::string	name = std::to_string( _count++ ) + "_@";
+	std::string	name = "@" + std::to_string( _count++ );
 	if ( _mat->find( name ) != _mat->end() )
 		_mat->at( name ) = mid;
 	else
 		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( name, mid ));
 	return ( name );
-
 }
 
 std::string	Solver::add_sub_mat( std::string lhs, std::string rhs, char op ) {
@@ -99,20 +125,19 @@ std::string	Solver::mat_n_mat( std::string lhs, std::string rhs, char op ) {
 	else if ( op == '/' )
 		;
 	return ( "" );
-
 }
 
 std::string	Solver::matrix_op( std::string lhs, std::string rhs, char op ) {
-	if ( _mat->find( lhs ) != _mat->end() &&
-		 _mat->find( rhs ) != _mat->end() )
+	if (( _mat->find( lhs ) != _mat->end() &&
+		 _mat->find( rhs ) != _mat->end() ) || op == '^')
 		return ( mat_n_mat( lhs, rhs, op ));
-	if ( _var->find( lhs ) != _var->end() &&
-		 _var->find( rhs ) != _var->end() )
-		;//mat_n_var
-	if ( _fun->find( lhs ) != _fun->end() &&
-		 _fun->find( rhs ) != _fun->end() )
-		;//mat_n_func
-	return ( "" );
+//	if ( _var->find( lhs ) != _var->end() &&
+//		 _var->find( rhs ) != _var->end() )
+//		return ( mat_n_var( lhs, rhs, op ));
+//	if ( _fun->find( lhs ) != _fun->end() &&
+//		 _fun->find( rhs ) != _fun->end() )
+//		;//mat_n_func
+	return ( mat_n_var( lhs, rhs, op ));
 }
 
 std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {

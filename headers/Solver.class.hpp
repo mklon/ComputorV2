@@ -73,6 +73,8 @@ public:
 
 	void		complex( std::string lhs, std::string rhs ); // complex numbers
 
+	int			get_count() const;
+	void		set_count( int _count );
 	void		set_fun( std::map<std::string, func> *_fun );
 	void		set_var( std::map<std::string, double> *var );
 	void		set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat );
