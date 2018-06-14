@@ -54,14 +54,13 @@ public:
 
 	Helper	&operator=( const Helper & rhs );
 
-
 	bool		cont_opr( std::string rhs );
 	void		size_check( std::vector<std::vector<double>> matrix );
 	void		display_mat( std::vector<std::vector<double>> matrix );
 	void		display_fun( std::string rhs );
 	void		func_check( std::string rhs );
 	void		replcae_str( std::string lhs, std::string rhs );
-
+	std::string	word_split( std::string rhs );
 
 	~Helper();
 };

@@ -79,3 +79,11 @@ void	Solver::read_matrix( std::string lhs, std::string rhs ) {
 		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, res ));
 	result( lhs, lhs );
 }
+
+void	Solver::oper_hand( std::string lhs, std::string rhs ) {
+	int 	i = 0;
+	rhs = get_help().word_split( rhs );
+	if ( rhs != "?" )
+		throw ( SolvExp( "impossible assignment" ));
+	std::cout << std::stod( summary( lhs, i ) ) << endl;
+}

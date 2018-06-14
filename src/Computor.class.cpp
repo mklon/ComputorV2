@@ -31,7 +31,6 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 	for ( auto i = 0; i < lhs.size(); i++ ) {
 		if ( !isalpha( lhs[i] ) || lhs == "i" )
 			throw ( CompExp( "invalid variable name" ));
-
 	}
 
 	if ( rhs.find('[') != std::string::npos ) {
@@ -45,10 +44,10 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 
 void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
 	if ( _solv.get_help().cont_opr( lhs ) ) {
-		cout << "oper_handle" << endl;
+		_solv.oper_hand( lhs, rhs );
 		return;
 	}
-	lhs = _solv.word_split( lhs );
+	lhs = _solv.get_help().word_split( lhs );
 	if ( lhs[lhs.size() - 1] == ')' ) {
 		_solv.functions( lhs, rhs );
 		return;

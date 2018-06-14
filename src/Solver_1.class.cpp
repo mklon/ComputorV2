@@ -31,7 +31,7 @@ double	Solver::find_var( std::string rhs ) {
 					rhs[i] != '^' && rhs[i] != '-' )
 				throw ( SolvExp( "unknown variable: " + rhs ));
 		if ( rhs == "" )
-			throw ( SolvExp( "invalid rhs" ));
+			throw ( SolvExp( "invalid designation" ));
 		return ( std::stod( rhs ));
 	}
 	else {
@@ -138,7 +138,7 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 	res = summary( rhs, i );
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
-			throw ( SolvExp( "invalid rhs" ));
+			throw ( SolvExp( "invalid designation" ));
 	result( lhs, res );
 }
 
@@ -171,6 +171,11 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 		cout << _var->at( lhs ) << endl;
 	}
 	else {
+		for ( int i = 0; i < rhs.size(); i++ )
+			if ( i == 0 && rhs[i] == '-' )
+				continue;
+			else if ( !isdigit( rhs[i] ) && rhs[i] != '.' )
+				throw ( SolvExp( "unknown variable: " + rhs ));
 		if ( _var->find( lhs ) == _var->end() )
 			_var->insert( std::pair<std::string, double>( lhs , std::stod( rhs )));
 		else

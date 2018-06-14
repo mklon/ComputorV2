@@ -21,6 +21,7 @@ std::string	Solver::mat_n_var( std::string lhs, std::string rhs, char op ) {
 	}
 	if ( _mat->find( rhs ) != _mat->end() && op == '/' )
 		throw ( SolvExp( "divide number on matrix" ));
+	return ( "" );
 }
 
 std::string	Solver::mult_mat( std::string lhs, std::string rhs, char op ) {
@@ -97,6 +98,8 @@ std::string	Solver::mat_n_mat( std::string lhs, std::string rhs, char op ) {
 		return ( mult_mat( lhs, rhs, op ));
 	else if ( op == '/' )
 		;
+	return ( "" );
+
 }
 
 std::string	Solver::matrix_op( std::string lhs, std::string rhs, char op ) {
@@ -109,6 +112,7 @@ std::string	Solver::matrix_op( std::string lhs, std::string rhs, char op ) {
 	if ( _fun->find( lhs ) != _fun->end() &&
 		 _fun->find( rhs ) != _fun->end() )
 		;//mat_n_func
+	return ( "" );
 }
 
 std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {

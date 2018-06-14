@@ -13,9 +13,7 @@
 #ifndef SOLVER_CLASS_HPP
 #define SOLVER_CLASS_HPP
 
-
 #include "Helper.class.hpp"
-
 
 class	Solver {
 private:
@@ -54,6 +52,7 @@ public:
 
 	// Solve 2
 	void		read_matrix( std::string lhs, std::string rhs );
+	void		oper_hand( std::string lhs, std::string rhs );
 	std::vector<double>					rows( std::string rhs, int &i );	//H
 	std::vector<std::vector<double>>	lines( std::string rhs, int &i );	//H
 
@@ -78,9 +77,6 @@ public:
 	void		set_var( std::map<std::string, double> *var );
 	void		set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat );
 	Helper		&get_help();
-
-
-	std::string	word_split( std::string rhs );
 
 	~Solver();
 };

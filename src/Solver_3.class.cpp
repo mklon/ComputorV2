@@ -60,8 +60,13 @@ std::string	Solver::func_sum( std::string lhs, std::string rhs ) {
 		throw ( SolvExp( "invalid function value" ));
 	get_help().replcae_str( lhs, rhs );
 	for ( auto i = polynomial.find( _fun->at( lhs ).name );
-		  i != std::string::npos; i = polynomial.find( _fun->at( lhs ).name, i + 1 ))
-		polynomial.replace( i, _fun->at( lhs ).name.size(), "(" + rhs + ")" );
+		  i != std::string::npos; i = polynomial.find( _fun->at( lhs ).name, i + 1 )) {
+		int		j = i + _fun->at( lhs ).name.size();
+		if ( !isalpha( polynomial[j] ) && !isalpha( polynomial[i - 1] )) {
+			polynomial.replace( i, _fun->at( lhs ).name.size(), "(" + rhs + ")" );
+			i++;
+		}
+	}
 	return ( summary( polynomial, j ));
 }
 
@@ -87,18 +92,4 @@ std::string	Solver::solve_func( std::string lhs, std::string rhs, int &i ) {
 	if ( _fun->find( lhs ) == _fun->end() )
 		throw ( SolvExp( "unknown function" ));
 	return ( func_sum( lhs, value ));
-}
-
-std::string	Solver::word_split( std::string rhs ) {
-	int 				i = 0;
-	std::istringstream	iss( rhs );
-
-	while ( iss ) {
-		iss >> rhs;
-		if ( ++i > 2 )
-			throw ( SolvExp( "invalid variable name" ));
-	}
-	if ( rhs == "" )
-		throw ( SolvExp( "invalid function value" ));
-	return ( rhs );
 }

@@ -23,13 +23,13 @@ Helper& Helper::operator=( const Helper &rhs ) {
 	return ( *this );
 }
 
-
 bool	Helper::cont_opr( std::string rhs ) {
 	// + - * / %
 	if ( rhs.find( '+' ) != std::string::npos ||
 		 rhs.find( '-' ) != std::string::npos ||
 		 rhs.find( '*' ) != std::string::npos ||
 		 rhs.find( '/' ) != std::string::npos ||
+		 rhs.find( '^' ) != std::string::npos ||
 		 rhs.find( '%' ) != std::string::npos )
 		return ( true );
 	return ( false );
@@ -67,8 +67,8 @@ void	Helper::func_check( std::string rhs ) {
 				 rhs[i] == '/' || rhs[i] == '-' || rhs[i] == '^' )
 				throw ( HelpExp( "invalid function definition" ));
 		}
-		if (( isdigit( rhs[i] ) && ( rhs[i + 1] == ' ' ||
-									 rhs[i + 1] == '\t')) || rhs[i] == '@') {
+		if ((( isdigit( rhs[i] ) || isalpha( rhs[i] ) ) && ( rhs[i + 1] == ' ' ||
+									 rhs[i + 1] == '\t'))) {
 			i++;
 			while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 			if ( rhs[i] != '+' && rhs[i] != '*' && rhs[i] != '/' && rhs[i] != ')'
@@ -100,20 +100,33 @@ void	Helper::replcae_str( std::string lhs, std::string rhs ) {
 		if ( !isalpha( lhs[i] ))
 			throw ( HelpExp( "invalid function value" ));
 	}
-	for ( auto i = rhs.find( lhs ); i != std::string::npos; i = rhs.find( lhs, i + 1 ))
-		rhs.replace( i, lhs.size(), "@" );
 	for ( auto i = 0; i < rhs.size(); i++ ) {
-		if ( !isdigit( rhs[i] ) && rhs[i] != ' '
+		if ( !isdigit( rhs[i] ) && !isalpha( rhs[i] )
 			 && rhs[i] != '\t' && rhs[i] != '+'
 			 && rhs[i] != '-' && rhs[i] != '/'
 			 && rhs[i] != '*' && rhs[i] != '%'
-			 && rhs[i] != '^' && rhs[i] != '@'
+			 && rhs[i] != '^' && rhs[i] != ' '
 			 && rhs[i] != '(' && rhs[i] != ')'
 			 && rhs[i] != '.')
 			throw ( HelpExp( "invalid function" ));
 	}
 	func_check( rhs );
 }
+
+std::string	Helper::word_split( std::string rhs ) {
+	int 				i = 0;
+	std::istringstream	iss( rhs );
+
+	while ( iss ) {
+		iss >> rhs;
+		if ( ++i > 2 )
+			throw ( HelpExp( "invalid variable name" ));
+	}
+	if ( rhs == "" )
+		throw ( HelpExp( "invalid function value" ));
+	return ( rhs );
+}
+
 
 Helper::~Helper() {}
 
