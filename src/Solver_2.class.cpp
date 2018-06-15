@@ -77,10 +77,19 @@ void	Solver::read_matrix( std::string lhs, std::string rhs ) {
 	result( lhs, lhs );
 }
 
-void	Solver::oper_hand( std::string lhs, std::string rhs ) {
+void	Solver::question_mark( std::string lhs, std::string rhs ) {
 	int 	i = 0;
-	rhs = get_help().word_split( rhs );
+
+	rhs = _help.word_split( rhs );
 	if ( rhs != "?" )
 		throw ( SolvExp( "impossible assignment" ));
 	std::cout << std::stod( summary( lhs, i ) ) << endl;
 }
+
+void	Solver::oper_hand( std::string lhs, std::string rhs ) {
+	if ( rhs.find( '?' ) != std::string::npos )
+		question_mark( lhs, rhs );
+	else
+		functions( lhs, rhs );
+}
+

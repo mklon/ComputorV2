@@ -56,10 +56,10 @@ void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
 		return;
 	}
 	lhs = _solv.get_help().word_split( lhs );
-	if ( lhs[lhs.size() - 1] == ')' ) {
+	/*if ( lhs[lhs.size() - 1] == ')' ) {
 		_solv.functions( lhs, rhs );
 		return;
-	}
+	}*/
 	var_handle( lhs, rhs );
 }
 

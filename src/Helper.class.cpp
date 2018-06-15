@@ -30,6 +30,7 @@ bool	Helper::cont_opr( std::string rhs ) {
 		 rhs.find( '*' ) != std::string::npos ||
 		 rhs.find( '/' ) != std::string::npos ||
 		 rhs.find( '^' ) != std::string::npos ||
+		 rhs.find( '(' ) != std::string::npos ||
 		 rhs.find( '%' ) != std::string::npos )
 		return ( true );
 	return ( false );
@@ -67,8 +68,8 @@ void	Helper::func_check( std::string rhs ) {
 				 rhs[i] == '/' || rhs[i] == '-' || rhs[i] == '^' )
 				throw ( HelpExp( "invalid function definition" ));
 		}
-		if ((( isdigit( rhs[i] ) || isalpha( rhs[i] ) ) && ( rhs[i + 1] == ' ' ||
-									 rhs[i + 1] == '\t'))) {
+		if ((( isdigit( rhs[i] ) || isalpha( rhs[i] ) ) &&
+				( rhs[i + 1] == ' ' || rhs[i + 1] == '\t'))) {
 			i++;
 			while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 			if ( rhs[i] != '+' && rhs[i] != '*' && rhs[i] != '/' && rhs[i] != ')'
@@ -98,7 +99,7 @@ void	Helper::display_fun( std::string rhs ) {
 void	Helper::replcae_str( std::string lhs, std::string rhs ) {
 	for ( auto i = 0; i < lhs.size(); i++ ) {
 		if ( !isalpha( lhs[i] ))
-			throw ( HelpExp( "invalid function value" ));
+			throw ( HelpExp( "invalid function definition" ));
 	}
 	for ( auto i = 0; i < rhs.size(); i++ ) {
 		if ( !isdigit( rhs[i] ) && !isalpha( rhs[i] )
@@ -108,7 +109,7 @@ void	Helper::replcae_str( std::string lhs, std::string rhs ) {
 			 && rhs[i] != '^' && rhs[i] != ' '
 			 && rhs[i] != '(' && rhs[i] != ')'
 			 && rhs[i] != '.')
-			throw ( HelpExp( "invalid function" ));
+			throw ( HelpExp( "invalid definition" ));
 	}
 	func_check( rhs );
 }
@@ -120,13 +121,24 @@ std::string	Helper::word_split( std::string rhs ) {
 	while ( iss ) {
 		iss >> rhs;
 		if ( ++i > 2 )
-			throw ( HelpExp( "invalid variable name" ));
+			throw ( HelpExp( "invalid definition" ));
 	}
 	if ( rhs == "" )
-		throw ( HelpExp( "invalid function value" ));
+		throw ( HelpExp( "invalid definition" ));
 	return ( rhs );
 }
 
+std::string	Helper::name( std::string rhs ) {
+	int 	i = 0;
+
+
+	while ( rhs[i] == ' ' || rhs[i] == '\t' ) i++;
+
+	while ( ++i < rhs.size() )
+		if ( rhs[i] == ' ' || rhs[i] == '\t' )
+			throw ( HelpExp( "invalid function name" ));
+	return ( word_split( rhs ));
+}
 
 Helper::~Helper() {}
 

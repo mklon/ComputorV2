@@ -24,16 +24,18 @@ void	Solver::func_info( std::string lhs, std::string value, std::string rhs ) {
 }
 
 void	Solver::functions( std::string lhs, std::string rhs ) {
-	auto		i = lhs.find( '(' );
+	auto		i = lhs.find( '(' ), j = lhs.find_last_of( ')' );
 	func		res;
 	std::string	name, value;
 
-	if ( i == std::string::npos )
+	if ( i == std::string::npos || j == std::string::npos )
 		throw ( SolvExp( "invalid lhs F" ));
-	name = lhs.substr( 0, i );
-	value = lhs.substr( i + 1, lhs.size() - i - 2 );
+	name = _help.name( lhs.substr( 0, i++ ));
+	value = _help.word_split( lhs.substr( i, j - i ));
+
+
 	if ( value == "" )
-		throw ( SolvExp( "invalid function value" ));
+		throw ( SolvExp( "invalid function definition" ));
 	if ( rhs.find('?') != std::string::npos ) {
 		func_info( name, value, rhs );
 		return;
@@ -57,7 +59,7 @@ std::string	Solver::func_sum( std::string lhs, std::string rhs ) {
 	std::string	polynomial = _fun->at( lhs ).value;
 
 	if ( rhs == "" )
-		throw ( SolvExp( "invalid function value" ));
+		throw ( SolvExp( "invalid function definition" ));
 	get_help().replcae_str( lhs, rhs );
 	for ( auto i = polynomial.find( _fun->at( lhs ).name );
 		  i != std::string::npos; i = polynomial.find( _fun->at( lhs ).name, i + 1 )) {
