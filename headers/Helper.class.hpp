@@ -13,6 +13,7 @@
 #ifndef HELPER_CLASS_HPP
 #define HELPER_CLASS_HPP
 
+#include "Equation.class.hpp"
 #include <iostream>
 #include <sstream>
 #include <vector>

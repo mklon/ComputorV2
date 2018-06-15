@@ -19,7 +19,6 @@ SOURCE =    src/main.cpp \
             src/Solver_4.class.cpp \
             src/Helper.class.cpp \
 
-
 OBJECTS = $(SOURCE:.cpp=.o)
 
 CC = g++
@@ -46,4 +45,3 @@ re: fclean all
 
 done:
 	@echo "\033[;32m[ Well done ]\033[33;0m"
-

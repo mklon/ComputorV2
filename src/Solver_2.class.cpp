@@ -108,18 +108,32 @@ void	Solver::oper_hand( std::string lhs, std::string rhs ) {
 }
 
 void	Solver::equation( std::string lhs, std::string rhs ) {
-	auto i = lhs.find( '(' ), j = lhs.find_last_of( ')' );
-	std::string name, value;
+	auto		i = lhs.find( '(' ), j = lhs.find_last_of( ')' );
+	std::string	name, value;
 
 	if ( i == std::string::npos || j == std::string::npos )
-		throw ( SolvExp( "invalid lhs F" ));
+		throw ( SolvExp( "invalid function definition" ));
 	name = _help.name( lhs.substr( 0, i++ ));
 	value = _help.word_split( lhs.substr( i, j - i ));
-	if ( _fun->find( name ) == _fun->end())
+	if ( _fun->find( name ) == _fun->end() )
 		throw ( SolvExp( "unknown function: " + name ));
-	auto ls = _fun->at( name );
+	auto	ls = _fun->at( name );
 	if ( ls.name != value )
 		throw ( SolvExp( "invalid function definition" ));
+	if ( ls.value.find( '/' ) != std::string::npos )
+		throw ( SolvExp( "invalid polynomial" ));
+	std::string	eq = ls.value + " = " + rhs;
+	std::string	line = "";
 
-	std::string eq = ls.value + " = " + rhs;
+	for ( int i = 0; i < eq.size(); i++ ) {
+		if ( eq[i] == ' ' && eq[i + 1] != '+' && eq[i + 1] != '-' && eq[i + 1] != '*' && eq[i + 1] != '=' )
+			continue;
+		line += eq[i];
+		if ( eq[i] == '+' || eq[i] == '-' || eq[i] == '*' || eq[i] == '=' ||
+			eq[i + 1] == '+' || eq[i + 1] == '-' || eq[i + 1] == '*' || eq[i + 1] == '=')
+			line += " ";
+	}
+	cout << line << endl;
+	Equation	obj( line, value );
+	obj.solve();
 }
