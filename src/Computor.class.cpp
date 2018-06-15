@@ -56,20 +56,18 @@ void	Computor::lhs_handle( std::string lhs, std::string rhs ) {
 		return;
 	}
 	lhs = _solv.get_help().word_split( lhs );
-	/*if ( lhs[lhs.size() - 1] == ')' ) {
-		_solv.functions( lhs, rhs );
-		return;
-	}*/
 	var_handle( lhs, rhs );
 }
 
 void	Computor::parse_line() {
 	unsigned long int	i;
 	std::string			part;
+	std::istringstream	iss( _line );
 
+	iss >> part;
 	for ( auto j = 0; j < _line.size(); j++ )
 		_line[j] = tolower( _line[j] );
-	if ( _line == "" )
+	if ( part == "" )
 		return;
 	if (( i = _line.find( '=' )) == std::string::npos )
 		throw ( CompExp( "missing equality symbol" ) );

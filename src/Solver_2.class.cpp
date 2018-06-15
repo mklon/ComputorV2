@@ -23,7 +23,7 @@ std::vector<double>	Solver::rows( std::string rhs, int &i ) {
 
 		while ( rhs[j] != ',' && rhs[j] != ']' && rhs[j] != ' ' ) {
 			if ( !isdigit( rhs[i] ) && rhs[i] != '-' && rhs[i] != '.' && !isalpha( rhs[i] ))
-				throw ( SolvExp( "unknown variable" ));
+				throw ( SolvExp( "unknown variable: " + rhs ));
 			j++;
 		}
 		row.push_back( find_var( rhs.substr( i, j - i )));
@@ -79,11 +79,25 @@ void	Solver::read_matrix( std::string lhs, std::string rhs ) {
 
 void	Solver::question_mark( std::string lhs, std::string rhs ) {
 	int 	i = 0;
+	std::string			val, mark;
+	std::istringstream	iss( rhs );
 
-	rhs = _help.word_split( rhs );
-	if ( rhs != "?" )
-		throw ( SolvExp( "impossible assignment" ));
-	std::cout << std::stod( summary( lhs, i ) ) << endl;
+	while ( iss ) {
+		if ( !i )
+			iss >> val;
+		else
+			iss >> mark;
+		if ( ++i > 3 )
+			throw ( SolvExp( "impossible assignment" ));
+	}
+	if ( val == "?" && i == 2 ) {
+		i = 0;
+		std::cout << std::stod( summary( lhs, i ) ) << endl;
+		return;
+	}
+	else if ( mark == "?" && i == 3 ) {
+		equation( lhs, val );
+	}
 }
 
 void	Solver::oper_hand( std::string lhs, std::string rhs ) {
@@ -93,3 +107,19 @@ void	Solver::oper_hand( std::string lhs, std::string rhs ) {
 		functions( lhs, rhs );
 }
 
+void	Solver::equation( std::string lhs, std::string rhs ) {
+	auto i = lhs.find( '(' ), j = lhs.find_last_of( ')' );
+	std::string name, value;
+
+	if ( i == std::string::npos || j == std::string::npos )
+		throw ( SolvExp( "invalid lhs F" ));
+	name = _help.name( lhs.substr( 0, i++ ));
+	value = _help.word_split( lhs.substr( i, j - i ));
+	if ( _fun->find( name ) == _fun->end())
+		throw ( SolvExp( "unknown function: " + name ));
+	auto ls = _fun->at( name );
+	if ( ls.name != value )
+		throw ( SolvExp( "invalid function definition" ));
+
+	std::string eq = ls.value + " = " + rhs;
+}

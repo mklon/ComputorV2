@@ -54,6 +54,7 @@ public:
 	void		read_matrix( std::string lhs, std::string rhs );
 	void		oper_hand( std::string lhs, std::string rhs );
 	void		question_mark( std::string lhs, std::string rhs );
+	void		equation( std::string lhs, std::string rhs );
 	std::vector<double>					rows( std::string rhs, int &i );	//H
 	std::vector<std::vector<double>>	lines( std::string rhs, int &i );	//H
 
@@ -70,7 +71,6 @@ public:
 	std::string	add_sub_mat( std::string lhs, std::string rhs, char op );
 	std::string	mult_mat( std::string lhs, std::string rhs, char op );
 	std::string	mat_n_var( std::string lhs, std::string rhs, char op );
-
 
 	void		complex( std::string lhs, std::string rhs ); // complex numbers
 

@@ -29,7 +29,7 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 	std::string	name, value;
 
 	if ( i == std::string::npos || j == std::string::npos )
-		throw ( SolvExp( "invalid lhs F" ));
+		throw ( SolvExp( "invalid function definition" ));
 	name = _help.name( lhs.substr( 0, i++ ));
 	value = _help.word_split( lhs.substr( i, j - i ));
 
@@ -76,14 +76,14 @@ std::string	Solver::solve_func( std::string lhs, std::string rhs, int &i ) {
 	int		pos = 0, buf = 0;
 
 	if ( rhs.find( ')' ) == std::string::npos )
-		throw ( SolvExp( "invalid rhs" ));
+		throw ( SolvExp( "invalid function definition" ));
 	for ( auto j = i + 1; j < rhs.size(); j++ ) {
 		if ( rhs[j] == '(' )
 			buf++;
 		else if ( rhs[j] == ')' && buf )
 			buf--;
 		else if ( j + 1 == rhs.size() && buf )
-			throw ( SolvExp( "invalid rhs" ));
+			throw ( SolvExp( "invalid function definition" ));
 		else if ( rhs[j] == ')' && !buf ) {
 			pos = j;
 			break;

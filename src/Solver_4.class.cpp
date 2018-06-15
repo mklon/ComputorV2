@@ -31,7 +31,7 @@ std::string	Solver::mat_n_var( std::string lhs, std::string rhs, char op ) {
 			throw ( SolvExp( "multiply number on matrix" ));
 	}
 	auto	ls = _mat->at( lhs );
-	num = std::stod( summary( rhs, i ));
+	num = std::stod( summary( rhs, i )); // find var !!!
 
 	for ( int i = 0; i < ls.size(); i++ ) {
 		for ( int j = 0; j < ls[0].size(); j++ ) {
