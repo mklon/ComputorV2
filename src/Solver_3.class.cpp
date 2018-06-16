@@ -33,7 +33,6 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 	name = _help.name( lhs.substr( 0, i++ ));
 	value = _help.word_split( lhs.substr( i, j - i ));
 
-
 	if ( value == "" )
 		throw ( SolvExp( "invalid function definition" ));
 	if ( rhs.find('?') != std::string::npos ) {
@@ -60,16 +59,24 @@ std::string	Solver::func_sum( std::string lhs, std::string rhs ) {
 
 	if ( rhs == "" )
 		throw ( SolvExp( "invalid function definition" ));
+	if ( _rec == "" )
+		_rec = lhs;
+	else if ( _help.recursion_check( _rec, polynomial ) )
+		throw ( SolvExp( "recursion without exit condition" ));
+
 	get_help().replcae_str( lhs, rhs );
 	for ( auto i = polynomial.find( _fun->at( lhs ).name );
 		  i != std::string::npos; i = polynomial.find( _fun->at( lhs ).name, i + 1 )) {
 		int		j = i + _fun->at( lhs ).name.size();
-		if ( !isalpha( polynomial[j] ) && !isalpha( polynomial[i - 1] )) {
+		if ( polynomial[j] != '(' && !isalpha( polynomial[j] ) && !isalpha( polynomial[i - 1] )) {
 			polynomial.replace( i, _fun->at( lhs ).name.size(), "(" + rhs + ")" );
-			i++;
+			i += rhs.size() + 2;
 		}
 	}
-	return ( summary( polynomial, j ));
+	std::string	hold = summary( polynomial, j );
+	if ( _rec == lhs )
+		_rec = "";
+	return ( hold );
 }
 
 std::string	Solver::solve_func( std::string lhs, std::string rhs, int &i ) {

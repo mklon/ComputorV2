@@ -45,7 +45,7 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 		_solv.read_matrix( lhs, rhs );
 	}
 	else if ( rhs.find('i') != std::string::npos )
-		;// _solv.complex( lhs, rhs );
+		_solv.complex( lhs, rhs );
 	else
 		_solv.solve_line( lhs, rhs );
 }

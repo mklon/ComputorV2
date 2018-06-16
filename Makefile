@@ -10,20 +10,23 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = name
+NAME = nameDHDHFHFFD
 
 SOURCE =    src/main.cpp \
             src/Computor.class.cpp \
             src/Solver_1.class.cpp \
             src/Solver_2.class.cpp \
+            src/Solver_3.class.cpp \
             src/Solver_4.class.cpp \
+            src/Solver_5.class.cpp \
+            src/Equation.class.cpp \
             src/Helper.class.cpp \
 
 OBJECTS = $(SOURCE:.cpp=.o)
 
 CC = g++
 
-FL = -std=c++11
+FL = -std=c++1z
 
 all: $(NAME) done
 

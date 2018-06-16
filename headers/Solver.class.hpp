@@ -33,6 +33,7 @@ private:
 	};
 	int 							_count;
 	Helper							_help;
+	std::string						_rec;
 	std::map<std::string, func>		*_fun;
 	std::map<std::string, double>	*_var;
 	std::map<std::string, std::vector<std::vector<double >>>	*_mat;
@@ -72,10 +73,12 @@ public:
 	std::string	mult_mat( std::string lhs, std::string rhs, char op );
 	std::string	mat_n_var( std::string lhs, std::string rhs, char op );
 
+	// Solve 5
 	void		complex( std::string lhs, std::string rhs ); // complex numbers
 
 	int			get_count() const;
 	void		set_count( int _count );
+	void		set_rec( const std::string &_rec );
 	void		set_fun( std::map<std::string, func> *_fun );
 	void		set_var( std::map<std::string, double> *var );
 	void		set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat );

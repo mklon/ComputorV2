@@ -147,6 +147,8 @@ std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {
 
 	double	n1, n2;
 
+	if ( lhs == "" && op == '-' )
+		lhs = "0";
 	n1 = find_var( lhs );
 	n2 = find_var( rhs );
 

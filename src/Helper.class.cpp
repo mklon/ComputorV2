@@ -140,6 +140,17 @@ std::string	Helper::name( std::string rhs ) {
 	return ( word_split( rhs ));
 }
 
+bool	Helper::recursion_check( std::string lhs, std::string rhs ) {
+	int 	j = 0;
+
+	for ( auto i = rhs.find( lhs ); i != std::string::npos; i = rhs.find( lhs, i + 1 )) {
+		j = i + lhs.size();
+		if ( rhs[j] == '(' && !isalpha( rhs[i - 1] ))
+			return ( true );
+	}
+	return ( false );
+}
+
 Helper::~Helper() {}
 
 // HelpExp

@@ -42,7 +42,7 @@ std::vector<std::vector<double>>	Solver::lines( std::string rhs, int &i ) {
 	while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 
 	if ( rhs[i++] != '[' )
-		throw ( SolvExp( "[" ));
+		throw ( SolvExp( "invalid matrix definition" ));
 	while ( true ) {
 		while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 
@@ -92,7 +92,11 @@ void	Solver::question_mark( std::string lhs, std::string rhs ) {
 	}
 	if ( val == "?" && i == 2 ) {
 		i = 0;
-		std::cout << std::stod( summary( lhs, i ) ) << endl;
+		mark = summary( lhs, i );
+		if ( _mat->find( mark ) != _mat->end() )
+			_help.display_mat( _mat->at( mark ));
+		else
+			std::cout << find_var( mark ) << endl;
 		return;
 	}
 	else if ( mark == "?" && i == 3 ) {

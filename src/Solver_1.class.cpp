@@ -12,7 +12,7 @@
 
 #include "../headers/Solver.class.hpp"
 
-Solver::Solver() : _count( 0 ) {}
+Solver::Solver() : _count( 0 ), _rec ( "" ) {}
 
 Solver::Solver( const Solver &rhs ) {
 	*this = rhs;
@@ -210,6 +210,10 @@ void	Solver::set_var( std::map<std::string, double> *var ) {
 
 void	Solver::set_mat( std::map<std::string, std::vector<std::vector<double>>> *mat ) {
 	this->_mat = mat;
+}
+
+void	Solver::set_rec( const std::string &rec ) {
+	this->_rec = rec;
 }
 
 Solver::~Solver() {}

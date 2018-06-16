@@ -25,6 +25,7 @@ Equation::Equation( std::string line, std::string var )
 
 const Equation& Equation::operator=( const Equation &rhs ) {
 	this->_degree = rhs._degree;
+	this->_var = rhs._var;
 	this->_line = rhs._line;
 	this->_result = rhs._result;
 	this->_equation = rhs._equation;
@@ -89,9 +90,8 @@ void	Equation::degree_check() {
 }
 
 void	Equation::parse_line() {
-	std::vector<std::string> line;
-
-	std::istringstream	iss( _line );
+	std::vector<std::string>	line;
+	std::istringstream			iss( _line );
 
 	while ( iss ) {
 		std::string subs;
@@ -118,7 +118,6 @@ void	Equation::solve_2degree(  ) {
 		_result = "Result for R:\n";
 		_result += _var + "1 = " + std::to_string( x1 ) + "\nx2 = "
 				   +  std::to_string( x2 ) + "\n";
-
 	}
 	else if ( D == 0 ) {
 		x1 = ( -1 * _equation[1] ) / ( 2 * _equation[0] );
