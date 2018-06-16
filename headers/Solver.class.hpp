@@ -70,7 +70,8 @@ public:
 	std::string	matrix_op( std::string lhs, std::string rhs, char op );
 	std::string	mat_n_mat( std::string lhs, std::string rhs, char op );
 	std::string	add_sub_mat( std::string lhs, std::string rhs, char op );
-	std::string	mult_mat( std::string lhs, std::string rhs, char op );
+	std::string	div_mat( std::string lhs, std::string rhs );
+	std::string	mult_mat( std::string lhs, std::string rhs );
 	std::string	mat_n_var( std::string lhs, std::string rhs, char op );
 
 	// Solve 5

@@ -33,6 +33,7 @@ void	Computor::clear() {
 			_mat.erase( "@" + std::to_string(i) );
 		}
 	_solv.set_count( 0 );
+	_solv.set_rec( "" );
 }
 
 void	Computor::var_handle( std::string lhs, std::string rhs ) {
@@ -72,7 +73,6 @@ void	Computor::parse_line() {
 	if (( i = _line.find( '=' )) == std::string::npos )
 		throw ( CompExp( "missing equality symbol" ) );
 	lhs_handle( _line.substr( 0, i ), _line.substr( i + 1 ));
-	clear();
 }
 
 void	Computor::run() {
@@ -83,6 +83,7 @@ void	Computor::run() {
 		catch ( std::exception &e ) {
 			cout << e.what() << endl;
 		}
+		clear();
 	}
 }
 

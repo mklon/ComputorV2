@@ -124,7 +124,7 @@ void	Solver::equation( std::string lhs, std::string rhs ) {
 	auto	ls = _fun->at( name );
 	if ( ls.name != value )
 		throw ( SolvExp( "invalid function definition" ));
-	if ( ls.value.find( '/' ) != std::string::npos )
+	if ( ls.value.find( '/' ) != std::string::npos || _help.replace_str( value , _fun->at( name ).value ))
 		throw ( SolvExp( "invalid polynomial" ));
 	std::string	eq = ls.value + " = " + rhs;
 	std::string	line = "";

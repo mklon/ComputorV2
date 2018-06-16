@@ -96,7 +96,7 @@ void	Helper::display_fun( std::string rhs ) {
 	cout << endl;
 }
 
-void	Helper::replcae_str( std::string lhs, std::string rhs ) {
+void	Helper::str_check( std::string lhs, std::string rhs ) {
 	for ( auto i = 0; i < lhs.size(); i++ ) {
 		if ( !isalpha( lhs[i] ))
 			throw ( HelpExp( "invalid function definition" ));
@@ -112,6 +112,24 @@ void	Helper::replcae_str( std::string lhs, std::string rhs ) {
 			throw ( HelpExp( "invalid definition" ));
 	}
 	func_check( rhs );
+}
+
+bool	Helper::replace_str( std::string lhs, std::string rhs ) {
+	int 	j = 0;
+
+	for ( auto i = rhs.find( lhs ); i != std::string::npos; i = rhs.find( lhs, i + 1 )) {
+		j = i + lhs.size();
+		rhs.replace( i, lhs.size(), "" );
+	}
+	for ( auto i = 0; i < rhs.size(); i++ ) {
+		if ( !isdigit( rhs[i] )
+			 && rhs[i] != '\t' && rhs[i] != '+'
+			 && rhs[i] != '-' && rhs[i] != '*'
+			 && rhs[i] != '^' && rhs[i] != ' '
+			 && rhs[i] != '.')
+			return ( true );
+	}
+	return ( false );
 }
 
 std::string	Helper::word_split( std::string rhs ) {

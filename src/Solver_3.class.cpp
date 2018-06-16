@@ -45,7 +45,7 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 	res.name = value;
 	res.value = rhs;
 
-	get_help().replcae_str( value, rhs );
+	get_help().str_check( value, rhs );
 	if ( _fun->find( name ) != _fun->end() )
 		_fun->at( name ) = res;
 	else
@@ -64,7 +64,7 @@ std::string	Solver::func_sum( std::string lhs, std::string rhs ) {
 	else if ( _help.recursion_check( _rec, polynomial ) )
 		throw ( SolvExp( "recursion without exit condition" ));
 
-	get_help().replcae_str( lhs, rhs );
+	get_help().str_check( lhs, rhs );
 	for ( auto i = polynomial.find( _fun->at( lhs ).name );
 		  i != std::string::npos; i = polynomial.find( _fun->at( lhs ).name, i + 1 )) {
 		int		j = i + _fun->at( lhs ).name.size();

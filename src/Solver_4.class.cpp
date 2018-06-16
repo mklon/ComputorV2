@@ -52,7 +52,33 @@ std::string	Solver::mat_n_var( std::string lhs, std::string rhs, char op ) {
 	return ( name );
 }
 
-std::string	Solver::mult_mat( std::string lhs, std::string rhs, char op ) {
+std::string	Solver::div_mat( std::string lhs, std::string rhs ) {
+	auto	rs = _mat->at( rhs );
+
+	if ( rs.size() != rs[0].size() )
+		throw ( SolvExp( "invalid size to divide matrices" ));
+	double 								res = 0;
+	std::vector<double>					temp;
+	std::vector<std::vector<double>>	mid;
+	for ( int i = 0; i < rs.size(); i++ ) {
+		for ( int j = 0; j < rs[0].size(); j++ ) {
+
+			res = rs[j][i];
+			temp.push_back( res );
+			res = 0;
+		}
+		mid.push_back( temp );
+		temp.clear();
+	}
+	std::string	name = "@" + std::to_string( _count++ );
+	if ( _mat->find( name ) != _mat->end() )
+		_mat->at( name ) = mid;
+	else
+		_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( name, mid ));
+	return ( mult_mat( lhs, name ) );
+}
+
+std::string	Solver::mult_mat( std::string lhs, std::string rhs ) {
 	auto	ls = _mat->at( lhs );
 	auto	rs = _mat->at( rhs );
 
@@ -121,13 +147,14 @@ std::string	Solver::mat_n_mat( std::string lhs, std::string rhs, char op ) {
 	if ( op == '+' || op == '-' )
 		return ( add_sub_mat( lhs, rhs, op ));
 	else if ( op == '*' )
-		return ( mult_mat( lhs, rhs, op ));
-	else if ( op == '/' )
-		;
-	return ( "" );
+		return ( mult_mat( lhs, rhs ));
+	else
+		return ( div_mat( lhs, rhs ));
 }
 
 std::string	Solver::matrix_op( std::string lhs, std::string rhs, char op ) {
+	if ( lhs == "" || rhs == "")
+		throw ( SolvExp( "invalid designation" ));
 	if (( _mat->find( lhs ) != _mat->end() &&
 		 _mat->find( rhs ) != _mat->end() ) || op == '^')
 		return ( mat_n_mat( lhs, rhs, op ));

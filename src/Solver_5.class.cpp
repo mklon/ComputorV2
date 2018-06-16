@@ -13,5 +13,5 @@
 #include "../headers/Solver.class.hpp"
 
 void	Solver::complex( std::string lhs, std::string rhs ) {
-	cout << lhs << endl << rhs << endl;
+	
 }
