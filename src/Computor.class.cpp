@@ -16,6 +16,7 @@ Computor::Computor() {
 	_solv.set_var( &_var );
 	_solv.set_mat( &_mat );
 	_solv.set_fun( &_fun );
+	_solv.set_com( &_com );
 }
 
 Computor::Computor( const Computor &rhs ) {
@@ -45,7 +46,7 @@ void	Computor::var_handle( std::string lhs, std::string rhs ) {
 	if ( rhs.find('[') != std::string::npos ) {
 		_solv.read_matrix( lhs, rhs );
 	}
-	else if ( rhs.find('i') != std::string::npos )
+	else if ( _solv.get_help().is_complex( rhs ))
 		_solv.complex( lhs, rhs );
 	else
 		_solv.solve_line( lhs, rhs );

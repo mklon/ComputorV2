@@ -39,9 +39,6 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 		func_info( name, value, rhs );
 		return;
 	}
-	if ( _var->find( name ) != _var->end() ||
-		_mat->find( name) != _mat->end() )
-		throw ( SolvExp( "reassigned variable with function" ));
 	res.name = value;
 	res.value = rhs;
 
@@ -50,6 +47,10 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 		_fun->at( name ) = res;
 	else
 		_fun->insert( std::pair<std::string, func>( name, res ));
+	if ( _var->find( name ) != _var->end() )
+			_var->erase( name );
+	if ( _mat->find( name ) != _mat->end() )
+		_mat->erase( name );
 	get_help().display_fun( rhs );
 }
 

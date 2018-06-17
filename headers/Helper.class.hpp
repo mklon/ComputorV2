@@ -59,8 +59,10 @@ public:
 	void		size_check( std::vector<std::vector<double>> matrix );
 	void		display_mat( std::vector<std::vector<double>> matrix );
 	void		display_fun( std::string rhs );
+	void		display_comp( comp_n rhs );
 	void		func_check( std::string rhs );
 	void		str_check( std::string lhs, std::string rhs );
+	bool		is_complex( std::string rhs );
 	bool		replace_str( std::string lhs, std::string rhs );
 	bool		recursion_check( std::string lhs, std::string rhs );
 	std::string	name( std::string rhs );

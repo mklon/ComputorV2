@@ -96,6 +96,18 @@ void	Helper::display_fun( std::string rhs ) {
 	cout << endl;
 }
 
+void	Helper::display_comp( comp_n rhs ) {
+	cout << rhs.a << " ";
+	if ( rhs.b >= 0 ) {
+		cout << "+ ";
+		cout << rhs.b << "i" << endl;
+	}
+	else {
+		cout << "- ";
+		cout << -1 * rhs.b << "i" << endl;
+	}
+}
+
 void	Helper::str_check( std::string lhs, std::string rhs ) {
 	for ( auto i = 0; i < lhs.size(); i++ ) {
 		if ( !isalpha( lhs[i] ))
@@ -164,6 +176,15 @@ bool	Helper::recursion_check( std::string lhs, std::string rhs ) {
 	for ( auto i = rhs.find( lhs ); i != std::string::npos; i = rhs.find( lhs, i + 1 )) {
 		j = i + lhs.size();
 		if ( rhs[j] == '(' && !isalpha( rhs[i - 1] ))
+			return ( true );
+	}
+	return ( false );
+}
+
+bool	Helper::is_complex( std::string rhs ) {
+
+	for ( auto i = rhs.find( "i" ); i != std::string::npos; i = rhs.find( "i", i + 1 )) {
+		if ( !isalpha( rhs[i - 1]) && !isalpha( rhs[i + 1]) )
 			return ( true );
 	}
 	return ( false );

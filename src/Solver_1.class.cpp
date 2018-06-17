@@ -128,17 +128,18 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 			cout << _var->at( lhs ) << endl;
 		else if ( _mat->find( lhs ) != _mat->end() )
 			get_help().display_mat( _mat->at( lhs ));
+		else if ( _com->find( lhs ) != _com->end() )
+			get_help().display_comp( _com->at( lhs ));
 		else
 			throw ( SolvExp( "unknown variable" ));
 		return;
 	}
-	if ( _fun->find( lhs ) != _fun->end() )
-		throw ( SolvExp( "reassigned function with variable" ));
-
 	res = summary( rhs, i );
 	while ( i < rhs.size() )
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
 			throw ( SolvExp( "invalid designation" ));
+	if ( _fun->find( lhs ) != _fun->end() )
+		_fun->erase( lhs );
 	result( lhs, res );
 }
 
@@ -215,6 +216,11 @@ void	Solver::set_mat( std::map<std::string, std::vector<std::vector<double>>> *m
 void	Solver::set_rec( const std::string &rec ) {
 	this->_rec = rec;
 }
+
+void	Solver::set_com( std::map<std::string, comp_n> *com ) {
+	this->_com = com;
+}
+
 
 Solver::~Solver() {}
 
