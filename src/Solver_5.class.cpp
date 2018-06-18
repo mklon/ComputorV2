@@ -12,6 +12,42 @@
 
 #include "../headers/Solver.class.hpp"
 
+std::string	Solver::comp_op( std::string lhs, std::string rhs, char op ) {
+	if ( op == '^' || op == '%' ) {
+		std::string	res;
+		res += "impossible to use \'";
+		res += op;
+		res += "\' to complex number";
+		throw ( SolvExp( res ));
+	}
+	comp_n	mid;
+	auto	ls = _com->at( lhs ), rs = _com->at( rhs );
+	if ( op == '+' ) {
+		mid.a = ls.a + rs.a;
+		mid.b = ls.b + rs.b;
+	}
+	else if ( op == '-' ) {
+		mid.a = ls.a - rs.a;
+		mid.b = ls.b - rs.b;
+	}
+	else if ( op == '*' ) {
+		mid.a = ls.a * rs.a - ls.b * rs.b;
+		mid.b = ls.a * rs.b + rs.a * ls.b;
+	}
+	else if ( op == '/' ) {
+		mid.a = ( ls.a * rs.a - ls.b * rs.b ) / ( rs.a * rs.a + rs.b * rs.b );
+		mid.b = ( rs.a * ls.b - ls.a * rs.b ) / ( rs.a * rs.a + rs.b * rs.b );
+	} else
+		throw ( SolvExp( "invalid operation with complex number" ));
+	std::string	name = "#" + std::to_string( _count_c++ );
+	if ( _com->find( name ) != _com->end() )
+		_com->at( name ) = mid;
+	else
+		_com->insert( std::pair<std::string, comp_n>( name, mid ));
+	return ( name );
+
+}
+
 void	Solver::complex( std::string lhs, std::string rhs ) {
 	int 	i = 0, j;
 	comp_n	num;

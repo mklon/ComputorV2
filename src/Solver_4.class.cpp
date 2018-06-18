@@ -44,7 +44,7 @@ std::string	Solver::mat_n_var( std::string lhs, std::string rhs, char op ) {
 		mid.push_back( md );
 		md.clear();
 	}
-	std::string	name = "@" + std::to_string( _count++ );
+	std::string	name = "@" + std::to_string( _count_m++ );
 	if ( _mat->find( name ) != _mat->end() )
 		_mat->at( name ) = mid;
 	else
@@ -70,7 +70,7 @@ std::string	Solver::div_mat( std::string lhs, std::string rhs ) {
 		mid.push_back( temp );
 		temp.clear();
 	}
-	std::string	name = "@" + std::to_string( _count++ );
+	std::string	name = "@" + std::to_string( _count_m++ );
 	if ( _mat->find( name ) != _mat->end() )
 		_mat->at( name ) = mid;
 	else
@@ -97,7 +97,7 @@ std::string	Solver::mult_mat( std::string lhs, std::string rhs ) {
 		mid.push_back( temp );
 		temp.clear();
 	}
-	std::string	name = "@" + std::to_string( _count++ );
+	std::string	name = "@" + std::to_string( _count_m++ );
 	if ( _mat->find( name ) != _mat->end() )
 		_mat->at( name ) = mid;
 	else
@@ -128,7 +128,7 @@ std::string	Solver::add_sub_mat( std::string lhs, std::string rhs, char op ) {
 		mid.push_back( temp );
 		temp.clear();
 	}
-	std::string	name = std::to_string( _count++ ) + "_@";
+	std::string	name = std::to_string( _count_m++ ) + "_@";
 	if ( _mat->find( name ) != _mat->end() )
 		_mat->at( name ) = mid;
 	else
@@ -155,15 +155,12 @@ std::string	Solver::mat_n_mat( std::string lhs, std::string rhs, char op ) {
 std::string	Solver::matrix_op( std::string lhs, std::string rhs, char op ) {
 	if ( lhs == "" || rhs == "")
 		throw ( SolvExp( "invalid designation" ));
+	if ( _com->find( lhs ) != _com->end() ||
+		 _com->find( rhs ) != _com->end() )
+		throw ( SolvExp( "operation between complex number and matrix" ));
 	if (( _mat->find( lhs ) != _mat->end() &&
 		 _mat->find( rhs ) != _mat->end() ) || op == '^')
 		return ( mat_n_mat( lhs, rhs, op ));
-//	if ( _var->find( lhs ) != _var->end() &&
-//		 _var->find( rhs ) != _var->end() )
-//		return ( mat_n_var( lhs, rhs, op ));
-//	if ( _fun->find( lhs ) != _fun->end() &&
-//		 _fun->find( rhs ) != _fun->end() )
-//		;//mat_n_func
 	return ( mat_n_var( lhs, rhs, op ));
 }
 
@@ -171,6 +168,13 @@ std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {
 	if ( _mat->find( lhs ) != _mat->end() ||
 			_mat->find( rhs ) != _mat->end() )
 		return ( matrix_op( lhs, rhs, op ));
+	if ( _com->find( lhs ) != _com->end() &&
+			_com->find( rhs ) != _com->end() )
+		return ( matrix_op( lhs, rhs, op ));
+	if ( _com->find( lhs ) != _com->end() ||
+			_com->find( rhs ) != _com->end() )
+		throw ( SolvExp( "invalid operation with complex number" ));
+
 
 	double	n1, n2;
 

@@ -51,6 +51,8 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 			_var->erase( name );
 	if ( _mat->find( name ) != _mat->end() )
 		_mat->erase( name );
+	if ( _com->find( name ) != _com->end() )
+		_com->erase( name );
 	get_help().display_fun( rhs );
 }
 

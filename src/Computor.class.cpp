@@ -29,11 +29,16 @@ Computor	&Computor::operator=( const Computor &rhs ) {
 }
 
 void	Computor::clear() {
-	if ( _solv.get_count() )
-		for ( int i = 0; i < _solv.get_count(); i++ ) {
-			_mat.erase( "@" + std::to_string(i) );
+	if ( _solv.get_count_m() )
+		for ( int i = 0; i < _solv.get_count_m(); i++ ) {
+			_mat.erase( "@" + std::to_string( i ) );
 		}
-	_solv.set_count( 0 );
+	if ( _solv.get_count_c() )
+		for ( int i = 0; i < _solv.get_count_c(); i++ ) {
+			_com.erase( "#" + std::to_string( i ) );
+		}
+	_solv.set_count_m( 0 );
+	_solv.set_count_c( 0 );
 	_solv.set_rec( "" );
 }
 

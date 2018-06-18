@@ -12,7 +12,7 @@
 
 #include "../headers/Solver.class.hpp"
 
-Solver::Solver() : _count( 0 ), _rec ( "" ) {}
+Solver::Solver() : _count_m( 0 ), _count_c( 0 ), _rec ( "" ) {}
 
 Solver::Solver( const Solver &rhs ) {
 	*this = rhs;
@@ -151,25 +151,39 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 				_mat->erase( rhs );
 			if ( _var->find( lhs ) != _var->end() )
 				_var->erase( lhs );
-		}
-		else if ( _var->find( lhs ) != _var->end() ) {
-			_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, _mat->at( rhs )));
-			_var->erase( lhs );
 		} else
 			_mat->insert( std::pair<std::string, std::vector<std::vector<double>>>( lhs, _mat->at( rhs )));
+		if ( _var->find( lhs ) != _var->end() )
+			_var->erase( lhs );
+		if ( _com->find( lhs ) != _com->end() )
+			_com->erase( lhs );
 		get_help().display_mat( _mat->at( lhs ));
 	}
 	else if ( _var->find( rhs ) != _var->end() ) {
 		if ( _var->find( lhs ) != _var->end() ) {
 			_var->at( lhs ) = _var->at( rhs );
-			_var->erase( rhs );
-		}
-		else if ( _mat->find( lhs ) != _mat->end() ) {
-			_var->insert( std::pair<std::string, double>( lhs, _var->at( rhs )));
-			_mat->erase( lhs );
+			if ( lhs != rhs )
+				_var->erase( rhs );
 		} else
 			_var->insert( std::pair<std::string, double>( lhs, _var->at( rhs )));
+		if ( _mat->find( lhs ) != _mat->end() )
+			_mat->erase( lhs );
+		if ( _com->find( lhs ) != _com->end() )
+			_com->erase( lhs );
 		cout << _var->at( lhs ) << endl;
+	}
+	else if ( _com->find( rhs ) != _com->end() ) {
+		if ( _com->find( lhs ) != _com->end() ) {
+			_com->at( lhs ) = _com->at( rhs );
+			if ( lhs != rhs )
+				_com->erase( rhs );
+		} else
+			_com->insert( std::pair<std::string, comp_n>( lhs, _com->at( rhs )));
+		if ( _var->find( lhs ) != _var->end() )
+			_var->erase( lhs );
+		if ( _mat->find( lhs ) != _mat->end() )
+			_mat->erase( lhs );
+		_help.display_comp( _com->at( rhs ));
 	}
 	else {
 		for ( int i = 0; i < rhs.size(); i++ )
@@ -183,6 +197,8 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 			_var->at( lhs ) = std::stod( rhs );
 		if ( _mat->find( lhs ) != _mat->end() )
 			_mat->erase( lhs );
+		if ( _com->find( lhs ) != _com->end() )
+			_com->erase( lhs );
 		cout << _var->at( lhs ) << endl;
 	}
 }
@@ -192,14 +208,21 @@ Helper	&Solver::get_help() {
 }
 
 
-int		Solver::get_count() const {
-	return _count;
+int		Solver::get_count_m() const {
+	return _count_m;
 }
 
-void	Solver::set_count( int _count ) {
-	Solver::_count = _count;
+int		Solver::get_count_c() const {
+	return _count_c;
 }
 
+void	Solver::set_count_m( int count_m ) {
+	Solver::_count_m = count_m;
+}
+
+void	Solver::set_count_c( int count_c ) {
+	Solver::_count_c = count_c;
+}
 
 void	Solver::set_fun( std::map<std::string, func> *fun ) {
 	this->_fun = fun;

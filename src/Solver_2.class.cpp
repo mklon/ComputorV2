@@ -145,3 +145,4 @@ void	Solver::equation( std::string lhs, std::string rhs ) {
 	Equation	obj( line, value );
 	obj.solve();
 }
+

@@ -31,7 +31,8 @@ private:
 
 		~SolvExp();
 	};
-	int 							_count;
+	int 							_count_m;
+	int 							_count_c;
 	Helper							_help;
 	std::string						_rec;
 	std::map<std::string, func>		*_fun;
@@ -77,14 +78,13 @@ public:
 
 	// Solve 5
 	void		complex( std::string lhs, std::string rhs ); // complex numbers
-	std::string	imag_a( std::string rhs, int &i, comp_n &num );
-	std::string	imag_b( std::string rhs, int &i, comp_n &num );
-	std::string	imag_c( std::string rhs, int &i, comp_n &num );
-	std::string	imag_op( std::string lhs, std::string rhs, char op, comp_n &num );
+	std::string	comp_op(  std::string lhs, std::string rhs, char op  );
 
 
-	int			get_count() const;
-	void		set_count( int _count );
+	int			get_count_m() const;
+	int			get_count_c() const;
+	void		set_count_m( int _count );
+	void		set_count_c( int _count_c );
 	void		set_rec( const std::string &_rec );
 	void		set_fun( std::map<std::string, func> *_fun );
 	void		set_var( std::map<std::string, double> *var );
