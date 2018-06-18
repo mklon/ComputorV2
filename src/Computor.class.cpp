@@ -24,7 +24,12 @@ Computor::Computor( const Computor &rhs ) {
 }
 
 Computor	&Computor::operator=( const Computor &rhs ) {
-	//!!!
+	this->_com = rhs._com;
+	this->_fun = rhs._fun;
+	this->_mat = rhs._mat;
+	this->_var = rhs._var;
+	this->_solv = rhs._solv;
+	this->_line = rhs._line;
 	return ( *this );
 }
 
@@ -43,7 +48,7 @@ void	Computor::clear() {
 }
 
 void	Computor::var_handle( std::string lhs, std::string rhs ) {
-	for ( auto i = 0; i < lhs.size(); i++ ) {
+	for ( size_t i = 0; i < lhs.size(); i++ ) {
 		if ( !isalpha( lhs[i] ) || lhs == "i" )
 			throw ( CompExp( "invalid variable name" ));
 	}
@@ -72,7 +77,7 @@ void	Computor::parse_line() {
 	std::istringstream	iss( _line );
 
 	iss >> part;
-	for ( auto j = 0; j < _line.size(); j++ )
+	for ( size_t j = 0; j < _line.size(); j++ )
 		_line[j] = tolower( _line[j] );
 	if ( part == "" )
 		return;

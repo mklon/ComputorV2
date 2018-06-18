@@ -33,8 +33,8 @@ std::string	Solver::mat_n_var( std::string lhs, std::string rhs, char op ) {
 	auto	ls = _mat->at( lhs );
 	num = std::stod( summary( rhs, i )); // find var !!!
 
-	for ( int i = 0; i < ls.size(); i++ ) {
-		for ( int j = 0; j < ls[0].size(); j++ ) {
+	for ( size_t i = 0; i < ls.size(); i++ ) {
+		for ( size_t j = 0; j < ls[0].size(); j++ ) {
 			if ( op == '*' )
 				temp = ls[i][j] * num;
 			else
@@ -60,8 +60,8 @@ std::string	Solver::div_mat( std::string lhs, std::string rhs ) {
 	double 								res = 0;
 	std::vector<double>					temp;
 	std::vector<std::vector<double>>	mid;
-	for ( int i = 0; i < rs.size(); i++ ) {
-		for ( int j = 0; j < rs[0].size(); j++ ) {
+	for ( size_t i = 0; i < rs.size(); i++ ) {
+		for ( size_t j = 0; j < rs[0].size(); j++ ) {
 
 			res = rs[j][i];
 			temp.push_back( res );
@@ -87,9 +87,9 @@ std::string	Solver::mult_mat( std::string lhs, std::string rhs ) {
 	double 								res = 0;
 	std::vector<double>					temp;
 	std::vector<std::vector<double>>	mid;
-	for ( int i = 0; i < ls.size(); i++ ) {
-		for ( int j = 0; j < rs[0].size(); j++ ) {
-			for ( int a = 0; a < rs.size(); a++ )
+	for ( size_t i = 0; i < ls.size(); i++ ) {
+		for ( size_t j = 0; j < rs[0].size(); j++ ) {
+			for ( size_t a = 0; a < rs.size(); a++ )
 				res += ls[i][a] * rs[a][j];
 			temp.push_back( res );
 			res = 0;
@@ -118,8 +118,8 @@ std::string	Solver::add_sub_mat( std::string lhs, std::string rhs, char op ) {
 	std::vector<double>					temp;
 	std::vector<std::vector<double>>	mid;
 
-	for ( int i = 0; i < ls.size(); i++ ) {
-		for ( int j = 0; j < ls[0].size(); j++ ) {
+	for ( size_t i = 0; i < ls.size(); i++ ) {
+		for ( size_t j = 0; j < ls[0].size(); j++ ) {
 			if ( op == '+' )
 				temp.push_back( ls[i][j] + rs[i][j] );
 			else

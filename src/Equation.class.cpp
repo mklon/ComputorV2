@@ -21,7 +21,7 @@ Equation::Equation( const Equation &rhs ) {
 }
 
 Equation::Equation( std::string line, std::string var )
-		: _degree( 0 ), _line( line ), _var( var ) {}
+		: _degree( 0 ), _var( var ), _line( line ) {}
 
 const Equation& Equation::operator=( const Equation &rhs ) {
 	this->_degree = rhs._degree;

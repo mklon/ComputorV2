@@ -12,11 +12,7 @@
 
 #include "../headers/Solver.class.hpp"
 
-
-
-void	Solver::func_info( std::string lhs, std::string value, std::string rhs ) {
-	int		i = 0;
-
+void	Solver::func_info( std::string lhs, std::string value ) {
 	if ( _fun->find( lhs ) == _fun->end() )
 		throw ( SolvExp( "unknown function" ));
 
@@ -36,7 +32,7 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 	if ( value == "" )
 		throw ( SolvExp( "invalid function definition" ));
 	if ( rhs.find('?') != std::string::npos ) {
-		func_info( name, value, rhs );
+		func_info( name, value );
 		return;
 	}
 	res.name = value;
@@ -87,12 +83,12 @@ std::string	Solver::solve_func( std::string lhs, std::string rhs, int &i ) {
 
 	if ( rhs.find( ')' ) == std::string::npos )
 		throw ( SolvExp( "invalid function definition" ));
-	for ( auto j = i + 1; j < rhs.size(); j++ ) {
+	for ( auto j = i + 1; j < static_cast<int>( rhs.size() ); j++ ) {
 		if ( rhs[j] == '(' )
 			buf++;
 		else if ( rhs[j] == ')' && buf )
 			buf--;
-		else if ( j + 1 == rhs.size() && buf )
+		else if ( j + 1 == static_cast<int>( rhs.size() ) && buf )
 			throw ( SolvExp( "invalid function definition" ));
 		else if ( rhs[j] == ')' && !buf ) {
 			pos = j;

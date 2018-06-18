@@ -56,13 +56,13 @@ void	Solver::complex( std::string lhs, std::string rhs ) {
 	num.b = 0;
 	while ( rhs[i] == ' ' && rhs[i] == '\t' ) i++;
 	j = i++;
-	while ( rhs[i] != 'i' && rhs[i] != '*' && i < rhs.size() ) i++;
+	while ( rhs[i] != 'i' && rhs[i] != '*' && i < static_cast<int>( rhs.size() )) i++;
 	num.b = find_var( _help.word_split( rhs.substr( j, i - j )));
 
 	if ( rhs[i] == '*' )
 		while ( rhs[i] != 'i' ) i++;
 
-	while ( rhs[i] != '-' && rhs[i] != '+' && i < rhs.size() ) i++;
+	while ( rhs[i] != '-' && rhs[i] != '+' && i < static_cast<int>( rhs.size() )) i++;
 
 	i++;
 	if ( rhs[i -1] == '-' )

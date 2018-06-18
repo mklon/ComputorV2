@@ -10,7 +10,7 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = nameDHDHFHFFD
+NAME = computor
 
 SOURCE =    src/main.cpp \
             src/Computor.class.cpp \
@@ -26,7 +26,7 @@ OBJECTS = $(SOURCE:.cpp=.o)
 
 CC = g++
 
-FL = -std=c++1z
+FL = -Wall -Wextra -Werror -std=c++1z
 
 all: $(NAME) done
 

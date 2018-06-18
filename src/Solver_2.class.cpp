@@ -66,7 +66,7 @@ void	Solver::read_matrix( std::string lhs, std::string rhs ) {
 	std::vector<std::vector<double>>	res;
 
 	res = lines( rhs, i );
-	while ( ++i < rhs.size() )
+	while ( ++i < static_cast<int>( rhs.size() ))
 		if ( rhs[i] != ' ' && rhs[i] != '\t' )
 			throw ( SolvExp( "invalid matrix definition" ));
 
@@ -133,7 +133,7 @@ void	Solver::equation( std::string lhs, std::string rhs ) {
 	std::string	eq = ls.value + " = " + rhs;
 	std::string	line = "";
 
-	for ( int i = 0; i < eq.size(); i++ ) {
+	for ( int i = 0; i < static_cast<int>( eq.size() ); i++ ) {
 		if ( eq[i] == ' ' && eq[i + 1] != '+' && eq[i + 1] != '-' && eq[i + 1] != '*' && eq[i + 1] != '=' )
 			continue;
 		line += eq[i];

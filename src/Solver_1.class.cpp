@@ -19,14 +19,20 @@ Solver::Solver( const Solver &rhs ) {
 }
 
 Solver	&Solver::operator=( const Solver &rhs ) {
-	//!!!
+	this->_var = rhs._var;
+	this->_mat = rhs._mat;
+	this->_fun = rhs._fun;
+	this->_com = rhs._com;
+	this->_rec = rhs._rec;
+	this->_help = rhs._help;
+	this->_count_c = rhs._count_c;
+	this->_count_m = rhs._count_m;
 	return ( *this );
 }
 
 double	Solver::find_var( std::string rhs ) {
-
 	if ( _var->find( rhs ) == _var->end() ) {
-		for ( int i = 0; i < rhs.size(); i++ )
+		for ( size_t i = 0; i < rhs.size(); i++ )
 			if ( !isdigit( rhs[i] ) && rhs[i] != '.'&&
 					rhs[i] != '^' && rhs[i] != '-' )
 				throw ( SolvExp( "unknown variable: " + rhs ));
@@ -68,7 +74,7 @@ std::string	Solver::power( std::string rhs, int &i ) {
 	std::string	n1, n2;
 
 	n1 = brackets( rhs, i );
-	while ( i < rhs.size() ) {
+	while ( i < static_cast<int>( rhs.size() )) {
 		while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 		place = i;
 		if ( rhs[i] != '^' )
@@ -86,7 +92,7 @@ std::string	Solver::factor( std::string rhs, int &i ) {
 	std::string	n1, n2;
 
 	n1 = power( rhs, i );
-	while ( i < rhs.size() ) {
+	while ( i < static_cast<int>( rhs.size() )) {
 		while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 		place = i;
 		if ( rhs[i] != '*' && rhs[i] != '/' && rhs[i] != '%' )
@@ -104,7 +110,7 @@ std::string	Solver::summary( std::string rhs, int &i ) {
 	std::string	n1,n2;
 
 	n1 = factor( rhs, i);
-	while ( i < rhs.size() ) {
+	while ( i < static_cast<int>( rhs.size() )) {
 		while ( rhs[i] == ' ' || rhs[i] == '\t') i++;
 		place = i;
 		if ( rhs[i] != '+' && rhs[i] != '-' )
@@ -135,7 +141,7 @@ void	Solver::solve_line( std::string lhs, std::string rhs ) {
 		return;
 	}
 	res = summary( rhs, i );
-	while ( i < rhs.size() )
+	while ( i < static_cast<int>( rhs.size() ))
 		if ( rhs[i] != ' ' && rhs[i++] != '\t' )
 			throw ( SolvExp( "invalid designation" ));
 	if ( _fun->find( lhs ) != _fun->end() )
@@ -186,7 +192,7 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 		_help.display_comp( _com->at( rhs ));
 	}
 	else {
-		for ( int i = 0; i < rhs.size(); i++ )
+		for ( int i = 0; i < static_cast<int>( rhs.size() ); i++ )
 			if ( i == 0 && rhs[i] == '-' )
 				continue;
 			else if ( !isdigit( rhs[i] ) && rhs[i] != '.' )

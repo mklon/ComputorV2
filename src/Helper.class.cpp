@@ -19,7 +19,7 @@ Helper::Helper( const Helper &rhs ) {
 }
 
 Helper& Helper::operator=( const Helper &rhs ) {
-	//!!!
+	( void )rhs;
 	return ( *this );
 }
 
@@ -37,17 +37,17 @@ bool	Helper::cont_opr( std::string rhs ) {
 }
 
 void	Helper::size_check( std::vector<std::vector<double>> matrix ) {
-	int		size = matrix[0].size();
+	size_t	size = matrix[0].size();
 
-	for ( int i = 1; i < matrix.size(); i++ )
+	for ( size_t i = 1; i < matrix.size(); i++ )
 		if ( matrix[i].size() != size )
 			throw ( HelpExp( "invalid matrix definition" ));
 }
 
 void	Helper::display_mat( std::vector<std::vector<double>> matrix ) {
-	for ( int i = 0; i < matrix.size(); i++ ) {
+	for ( size_t i = 0; i < matrix.size(); i++ ) {
 		cout << "[ ";
-		for ( int j = 0; j < matrix[i].size(); j++ ) {
+		for ( size_t j = 0; j < matrix[i].size(); j++ ) {
 			cout << matrix[i][j];
 			if ( j != matrix[i].size() - 1 )
 				cout << " , ";
@@ -57,7 +57,7 @@ void	Helper::display_mat( std::vector<std::vector<double>> matrix ) {
 }
 
 void	Helper::func_check( std::string rhs ) {
-	int		i = -1;
+	size_t	i = -1;
 
 	while ( ++i < rhs.size() ) {
 		if ( rhs[i] == '+' || rhs[i] == '*' ||
@@ -80,7 +80,7 @@ void	Helper::func_check( std::string rhs ) {
 }
 
 void	Helper::display_fun( std::string rhs ) {
-	int 	i = -1;
+	size_t	i = -1;
 
 	while ( ++i < rhs.size() ) {
 		if ( rhs[i] == ' ' || rhs[i] =='\t')
@@ -109,11 +109,11 @@ void	Helper::display_comp( comp_n rhs ) {
 }
 
 void	Helper::str_check( std::string lhs, std::string rhs ) {
-	for ( auto i = 0; i < lhs.size(); i++ ) {
+	for ( size_t i = 0; i < lhs.size(); i++ ) {
 		if ( !isalpha( lhs[i] ))
 			throw ( HelpExp( "invalid function definition" ));
 	}
-	for ( auto i = 0; i < rhs.size(); i++ ) {
+	for ( size_t i = 0; i < rhs.size(); i++ ) {
 		if ( !isdigit( rhs[i] ) && !isalpha( rhs[i] )
 			 && rhs[i] != '\t' && rhs[i] != '+'
 			 && rhs[i] != '-' && rhs[i] != '/'
@@ -133,7 +133,7 @@ bool	Helper::replace_str( std::string lhs, std::string rhs ) {
 		j = i + lhs.size();
 		rhs.replace( i, lhs.size(), "" );
 	}
-	for ( auto i = 0; i < rhs.size(); i++ ) {
+	for ( size_t i = 0; i < rhs.size(); i++ ) {
 		if ( !isdigit( rhs[i] )
 			 && rhs[i] != '\t' && rhs[i] != '+'
 			 && rhs[i] != '-' && rhs[i] != '*'
@@ -159,11 +159,9 @@ std::string	Helper::word_split( std::string rhs ) {
 }
 
 std::string	Helper::name( std::string rhs ) {
-	int 	i = 0;
-
+	size_t	i = 0;
 
 	while ( rhs[i] == ' ' || rhs[i] == '\t' ) i++;
-
 	while ( ++i < rhs.size() )
 		if ( rhs[i] == ' ' || rhs[i] == '\t' )
 			throw ( HelpExp( "invalid function name" ));
