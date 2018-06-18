@@ -57,12 +57,23 @@ void	Solver::complex( std::string lhs, std::string rhs ) {
 	while ( rhs[i] == ' ' && rhs[i] == '\t' ) i++;
 	j = i++;
 	while ( rhs[i] != 'i' && rhs[i] != '*' && i < static_cast<int>( rhs.size() )) i++;
-	num.b = find_var( _help.word_split( rhs.substr( j, i - j )));
+	std::stringstream	iss( _help.word_split( rhs.substr( j, i - j )));
+	std::string			temp;
+	iss >> temp;
+
+	if ( temp != "" )
+		num.b = find_var( temp );
 
 	if ( rhs[i] == '*' )
 		while ( rhs[i] != 'i' ) i++;
 
-	while ( rhs[i] != '-' && rhs[i] != '+' && i < static_cast<int>( rhs.size() )) i++;
+	i++;
+	while ( rhs[i] != '-' && rhs[i] != '+' && i < static_cast<int>( rhs.size() )) {
+		if ( rhs[i] != ' ' && rhs[i] != '\t' ) {
+			throw ( SolvExp( "invalid complex number definition" ));
+		}
+		i++;
+	}
 
 	i++;
 	if ( rhs[i -1] == '-' )

@@ -168,6 +168,15 @@ std::string	Helper::name( std::string rhs ) {
 	return ( word_split( rhs ));
 }
 
+std::string	Helper::mult_sign( std::string lhs, std::string rhs ) {
+	for ( auto i = rhs.find( lhs ); i != std::string::npos; i = rhs.find( lhs, i + 1 )) {
+		if ( isdigit( rhs[i - 1] ))
+			rhs.replace( i, 0, "*" );
+
+	}
+	return ( rhs );
+}
+
 bool	Helper::recursion_check( std::string lhs, std::string rhs ) {
 	int 	j = 0;
 

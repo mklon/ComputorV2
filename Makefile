@@ -10,7 +10,7 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = computor
+NAME = computorv2
 
 SOURCE =    src/main.cpp \
             src/Computor.class.cpp \

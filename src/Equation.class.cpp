@@ -121,8 +121,8 @@ void	Equation::solve_2degree(  ) {
 	}
 	else if ( D == 0 ) {
 		x1 = ( -1 * _equation[1] ) / ( 2 * _equation[0] );
-		_result = "Discriminant is equal to 0!\n";
-		_result = _var + " = " + std::to_string( x1 ) + "\n";
+		_result = "Result for R:\n";
+		_result += _var + " = " + std::to_string( x1 ) + "\n";
 	}
 	else {
 		_result = "Result for C:\n";

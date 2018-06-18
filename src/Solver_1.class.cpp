@@ -189,7 +189,7 @@ void	Solver::result( std::string lhs, std::string rhs ) {
 			_var->erase( lhs );
 		if ( _mat->find( lhs ) != _mat->end() )
 			_mat->erase( lhs );
-		_help.display_comp( _com->at( rhs ));
+		_help.display_comp( _com->at( lhs ));
 	}
 	else {
 		for ( int i = 0; i < static_cast<int>( rhs.size() ); i++ )

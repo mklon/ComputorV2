@@ -29,6 +29,13 @@ void	Solver::functions( std::string lhs, std::string rhs ) {
 	name = _help.name( lhs.substr( 0, i++ ));
 	value = _help.word_split( lhs.substr( i, j - i ));
 
+	rhs = _help.mult_sign( value, rhs );
+
+	for ( size_t k = 0; k < name.size(); k++ ) {
+		if ( !isalpha( name[k] ) || lhs == "i" )
+			throw ( SolvExp( "invalid function name" ));
+	}
+
 	if ( value == "" )
 		throw ( SolvExp( "invalid function definition" ));
 	if ( rhs.find('?') != std::string::npos ) {
@@ -98,6 +105,6 @@ std::string	Solver::solve_func( std::string lhs, std::string rhs, int &i ) {
 	std::string	value = rhs.substr( i + 1, pos - i - 1 );
 	i = pos + 1;
 	if ( _fun->find( lhs ) == _fun->end() )
-		throw ( SolvExp( "unknown function" ));
+		throw ( SolvExp( "unknown function: " + lhs ));
 	return ( func_sum( lhs, value ));
 }

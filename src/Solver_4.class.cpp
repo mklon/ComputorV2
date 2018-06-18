@@ -170,7 +170,7 @@ std::string	Solver::operation( std::string lhs, std::string rhs, char op ) {
 		return ( matrix_op( lhs, rhs, op ));
 	if ( _com->find( lhs ) != _com->end() &&
 			_com->find( rhs ) != _com->end() )
-		return ( matrix_op( lhs, rhs, op ));
+		return ( comp_op( lhs, rhs, op ));
 	if ( _com->find( lhs ) != _com->end() ||
 			_com->find( rhs ) != _com->end() )
 		throw ( SolvExp( "invalid operation with complex number" ));

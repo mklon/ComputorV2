@@ -90,6 +90,7 @@ void	Computor::run() {
 	while ( std::getline( std::cin, _line ) ) {
 		try {
 			parse_line();
+			_mat.erase( "asd" );
 		}
 		catch ( std::exception &e ) {
 			cout << e.what() << endl;
