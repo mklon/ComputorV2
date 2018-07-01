@@ -33,7 +33,7 @@ Solver	&Solver::operator=( const Solver &rhs ) {
 double	Solver::find_var( std::string rhs ) {
 	if ( _var->find( rhs ) == _var->end() ) {
 		for ( size_t i = 0; i < rhs.size(); i++ )
-			if ( !isdigit( rhs[i] ) && rhs[i] != '.'&&
+			if ( !isdigit( rhs[i] ) && rhs[i] != '.' &&
 					rhs[i] != '^' && rhs[i] != '-' )
 				throw ( SolvExp( "unknown variable: " + rhs ));
 		if ( rhs == "" )
